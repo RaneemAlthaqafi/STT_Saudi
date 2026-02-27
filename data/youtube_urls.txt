@@ -1,0 +1,19 @@
+# Saudi Dialect YouTube URLs for STT Data Collection
+# Add YouTube URLs below (one per line)
+# Lines starting with # are ignored
+#
+# Recommended content types:
+# - Saudi podcasts (فنجان, ثمانية, سقراط)
+# - Saudi talk shows
+# - Saudi news interviews
+# - Saudi daily vlogs
+# - Saudi government/business content
+#
+# Tips:
+# - Look for clear single-speaker segments
+# - Avoid music-heavy content
+# - Prefer conversational/natural speech
+# - Mix Najdi, Hijazi, and Khaliji speakers
+#
+# Example (replace with actual URLs):
+# https://www.youtube.com/watch?v=EXAMPLE_ID

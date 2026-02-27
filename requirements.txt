@@ -1,0 +1,31 @@
+# Core training
+unsloth>=2025.8.1
+transformers>=4.46.0
+datasets>=2.20.0
+torch>=2.4.0
+trl>=0.12.0
+accelerate>=0.34.0
+bitsandbytes>=0.44.0
+peft>=0.13.0
+
+# Audio processing
+librosa>=0.10.0
+soundfile>=0.12.0
+torchaudio>=2.4.0
+audiomentations>=0.37.0
+
+# Evaluation
+jiwer>=3.0.0
+whisper-normalizer>=1.0.0
+
+# Benchmark (optional — for scripts/00_benchmark.py)
+# faster-whisper>=1.0.0    # uncomment to benchmark Systran/faster-whisper
+# nemo_toolkit[asr]        # uncomment to benchmark NVIDIA models
+
+# Data collection
+yt-dlp>=2024.0.0
+
+# Utilities
+tqdm>=4.66.0
+numpy>=1.26.0
+pandas>=2.1.0

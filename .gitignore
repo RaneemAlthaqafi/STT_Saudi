@@ -1,0 +1,36 @@
+# Data (too large for git)
+data/saudi_clean/
+data/saudi_augmented/
+data/musan/
+data/youtube_raw/
+data/youtube_transcribed/
+
+# Model checkpoints
+checkpoints/
+model_final/
+saudi_stt_*/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Environment
+.env
+.venv/
+venv/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
