@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saudi STT — تحويل الصوت إلى نص</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* ═══════════════════════════════════════════
+           ZATCA Brand Identity Theme
+           ═══════════════════════════════════════════ */
+        :root {
+            /* Primary Colors */
+            --zatca-green: #62B34F;
+            --zatca-teal: #4FBBBD;
+            --zatca-blue-dark: #1D3761;
+            --zatca-blue: #2053A4;
+            --zatca-blue-light: #0996D4;
+            --zatca-gray: #575756;
+
+            /* Secondary Colors */
+            --zatca-lime: #AEC90B;
+            --zatca-red: #E84A41;
+            --zatca-purple: #50368B;
+            --zatca-gold: #FABB33;
+            --zatca-dark-teal: #007C8A;
+            --zatca-navy: #006DA2;
+            --zatca-gray-light: #BCBCBB;
+
+            /* Gradients */
+            --gradient-primary: linear-gradient(135deg, #1D3761 0%, #2053A4 40%, #0996D4 100%);
+            --gradient-accent: linear-gradient(135deg, #4FBBBD 0%, #62B34F 100%);
+            --gradient-hero: linear-gradient(160deg, #0f1a2e 0%, #1D3761 30%, #2053A4 60%, #0996D4 100%);
+
+            /* UI */
+            --bg: #f8f9fc;
+            --card-bg: #ffffff;
+            --text-primary: #1D3761;
+            --text-secondary: #575756;
+            --border: #e2e8f0;
+            --shadow: 0 4px 24px rgba(29, 55, 97, 0.08);
+            --shadow-lg: 0 12px 48px rgba(29, 55, 97, 0.12);
+            --radius: 16px;
+            --radius-sm: 10px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: var(--bg);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ═══ HERO HEADER ═══ */
+        .hero {
+            background: var(--gradient-hero);
+            padding: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -20%;
+            width: 80%;
+            height: 200%;
+            background: radial-gradient(ellipse, rgba(79, 187, 189, 0.1) 0%, transparent 70%);
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            right: -10%;
+            width: 60%;
+            height: 160%;
+            background: radial-gradient(ellipse, rgba(98, 179, 79, 0.08) 0%, transparent 70%);
+            animation: float 25s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(30px, -20px) rotate(2deg); }
+            66% { transform: translate(-20px, 20px) rotate(-1deg); }
+        }
+
+        /* Geometric lines — ZATCA design element */
+        .hero-lines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+            opacity: 0.07;
+        }
+
+        .hero-lines span {
+            position: absolute;
+            display: block;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--zatca-teal), transparent);
+            transform-origin: left;
+        }
+
+        .hero-lines span:nth-child(1) { top: 15%; left: 0; width: 60%; transform: rotate(3deg); }
+        .hero-lines span:nth-child(2) { top: 35%; left: 20%; width: 80%; transform: rotate(-2deg); }
+        .hero-lines span:nth-child(3) { top: 55%; left: 5%; width: 70%; transform: rotate(1.5deg); }
+        .hero-lines span:nth-child(4) { top: 75%; left: 10%; width: 90%; transform: rotate(-1deg); }
+        .hero-lines span:nth-child(5) { top: 90%; left: 0; width: 50%; transform: rotate(2.5deg); }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 48px 32px 56px;
+            text-align: center;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.12);
+            padding: 8px 20px;
+            border-radius: 50px;
+            color: var(--zatca-teal);
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 24px;
+            letter-spacing: 0.5px;
+        }
+
+        .hero-badge .dot {
+            width: 8px;
+            height: 8px;
+            background: var(--zatca-green);
+            border-radius: 50%;
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.3); }
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 14px;
+            line-height: 1.3;
+        }
+
+        .hero h1 span {
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: rgba(255,255,255,0.6);
+            font-weight: 400;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        /* ═══ MAIN CONTAINER ═══ */
+        .container {
+            max-width: 1100px;
+            margin: -40px auto 60px;
+            padding: 0 24px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* ═══ UPLOAD CARD ═══ */
+        .upload-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            padding: 40px;
+            margin-bottom: 28px;
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .upload-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            height: 4px;
+            background: var(--gradient-accent);
+        }
+
+        .dropzone {
+            border: 2px dashed #c8d6e5;
+            border-radius: var(--radius-sm);
+            padding: 52px 32px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #f8fafd;
+            position: relative;
+        }
+
+        .dropzone:hover, .dropzone.drag-over {
+            border-color: var(--zatca-blue);
+            background: rgba(32, 83, 164, 0.03);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(32, 83, 164, 0.1);
+        }
+
+        .dropzone-icon {
+            width: 72px;
+            height: 72px;
+            margin: 0 auto 20px;
+            background: var(--gradient-primary);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 24px rgba(29, 55, 97, 0.2);
+        }
+
+        .dropzone-icon svg { width: 32px; height: 32px; fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+        .dropzone h3 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .dropzone p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+
+        .dropzone .formats {
+            font-size: 12px;
+            color: #94a3b8;
+            margin-top: 12px;
+            direction: ltr;
+        }
+
+        .file-input { display: none; }
+
+        /* File info bar */
+        .file-info {
+            display: none;
+            align-items: center;
+            gap: 16px;
+            padding: 16px 20px;
+            background: linear-gradient(135deg, rgba(79, 187, 189, 0.06), rgba(98, 179, 79, 0.06));
+            border: 1px solid rgba(79, 187, 189, 0.2);
+            border-radius: var(--radius-sm);
+            margin-top: 20px;
+        }
+
+        .file-info.visible { display: flex; }
+
+        .file-info .file-icon {
+            width: 44px;
+            height: 44px;
+            background: var(--gradient-accent);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .file-info .file-icon svg { width: 20px; height: 20px; stroke: #fff; fill: none; stroke-width: 2; }
+
+        .file-info .file-details { flex: 1; min-width: 0; }
+        .file-info .file-name { font-weight: 600; font-size: 14px; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .file-info .file-meta { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+
+        .file-info .remove-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--zatca-red);
+            padding: 8px;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+        .file-info .remove-btn:hover { background: rgba(232, 74, 65, 0.08); }
+
+        /* Process button */
+        .btn-process {
+            display: none;
+            width: 100%;
+            padding: 18px;
+            margin-top: 24px;
+            background: var(--gradient-primary);
+            color: #fff;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            border: none;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-process.visible { display: block; }
+
+        .btn-process:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(32, 83, 164, 0.3);
+        }
+
+        .btn-process:active { transform: translateY(0); }
+
+        .btn-process.processing {
+            pointer-events: none;
+            opacity: 0.85;
+        }
+
+        .btn-process .spinner {
+            display: none;
+            width: 22px;
+            height: 22px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto;
+        }
+
+        .btn-process.processing .btn-text { display: none; }
+        .btn-process.processing .spinner { display: block; }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ═══ RESULTS SECTION ═══ */
+        .results-section {
+            display: none;
+        }
+
+        .results-section.visible { display: block; }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .section-header .icon-box {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .section-header .icon-box svg { width: 20px; height: 20px; stroke: #fff; fill: none; stroke-width: 2; }
+
+        .section-header h2 {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        /* Transcript card */
+        .transcript-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            overflow: hidden;
+            margin-bottom: 28px;
+        }
+
+        .transcript-card .card-header {
+            padding: 20px 28px;
+            background: linear-gradient(135deg, rgba(29, 55, 97, 0.03), rgba(9, 150, 212, 0.03));
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .transcript-card .card-header h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .copy-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            background: rgba(32, 83, 164, 0.06);
+            border: 1px solid rgba(32, 83, 164, 0.12);
+            border-radius: 8px;
+            cursor: pointer;
+            color: var(--zatca-blue);
+            font-family: 'Tajawal', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover { background: rgba(32, 83, 164, 0.1); }
+        .copy-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+        .transcript-text {
+            padding: 28px;
+            font-size: 20px;
+            line-height: 2;
+            color: var(--text-primary);
+            min-height: 120px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        /* Stats grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            border-radius: var(--radius-sm);
+            padding: 24px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .stat-card .stat-value {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+
+        .stat-card:nth-child(1) .stat-value { color: var(--zatca-blue); }
+        .stat-card:nth-child(2) .stat-value { color: var(--zatca-green); }
+        .stat-card:nth-child(3) .stat-value { color: var(--zatca-teal); }
+        .stat-card:nth-child(4) .stat-value { color: var(--zatca-purple); }
+
+        .stat-card .stat-label {
+            font-size: 13px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* Audio player */
+        .audio-player-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            padding: 24px 28px;
+            margin-bottom: 28px;
+        }
+
+        .audio-player-card h3 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+
+        .audio-player-card audio {
+            width: 100%;
+            border-radius: 8px;
+            outline: none;
+        }
+
+        /* ═══ PROGRESS OVERLAY ═══ */
+        .progress-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(15, 26, 46, 0.7);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .progress-overlay.visible { display: flex; }
+
+        .progress-box {
+            background: #fff;
+            border-radius: var(--radius);
+            padding: 48px;
+            text-align: center;
+            max-width: 420px;
+            width: 90%;
+            box-shadow: 0 24px 64px rgba(0,0,0,0.2);
+        }
+
+        .progress-box .wave-animation {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 4px;
+            height: 48px;
+            margin-bottom: 28px;
+        }
+
+        .progress-box .wave-bar {
+            width: 6px;
+            background: var(--gradient-primary);
+            border-radius: 3px;
+            animation: wave 1.2s ease-in-out infinite;
+        }
+
+        .wave-bar:nth-child(1) { height: 20px; animation-delay: 0s; }
+        .wave-bar:nth-child(2) { height: 35px; animation-delay: 0.1s; }
+        .wave-bar:nth-child(3) { height: 48px; animation-delay: 0.2s; }
+        .wave-bar:nth-child(4) { height: 28px; animation-delay: 0.3s; }
+        .wave-bar:nth-child(5) { height: 40px; animation-delay: 0.4s; }
+        .wave-bar:nth-child(6) { height: 20px; animation-delay: 0.5s; }
+        .wave-bar:nth-child(7) { height: 32px; animation-delay: 0.6s; }
+
+        @keyframes wave {
+            0%, 100% { transform: scaleY(0.4); }
+            50% { transform: scaleY(1); }
+        }
+
+        .progress-box h3 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .progress-box p {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .progress-step {
+            margin-top: 24px;
+            padding: 12px 20px;
+            background: rgba(79, 187, 189, 0.08);
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--zatca-teal);
+        }
+
+        /* ═══ FOOTER ═══ */
+        .footer {
+            text-align: center;
+            padding: 32px 24px;
+            color: var(--text-secondary);
+            font-size: 13px;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer a {
+            color: var(--zatca-blue);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* ═══ TOAST ═══ */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--zatca-blue-dark);
+            color: #fff;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            z-index: 2000;
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+        }
+
+        .toast.show { transform: translateX(-50%) translateY(0); }
+
+        /* ═══ RESPONSIVE ═══ */
+        @media (max-width: 640px) {
+            .hero-content { padding: 32px 20px 44px; }
+            .hero h1 { font-size: 28px; }
+            .hero p { font-size: 15px; }
+            .upload-card { padding: 24px; }
+            .dropzone { padding: 36px 20px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .transcript-text { font-size: 17px; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ═══ HERO ═══ -->
+    <header class="hero">
+        <div class="hero-lines">
+            <span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span class="dot"></span>
+                نظام تحويل الصوت إلى نص
+            </div>
+            <h1>تحويل <span>الصوت</span> إلى نص عربي</h1>
+            <p>ارفع مقطع صوتي أو فيديو وسيتم تحويله تلقائياً إلى نص باللهجة السعودية باستخدام نموذج MasriSwitch-Gemma3n</p>
+        </div>
+    </header>
+
+    <!-- ═══ MAIN ═══ -->
+    <main class="container">
+
+        <!-- Upload Card -->
+        <div class="upload-card">
+            <div class="dropzone" id="dropzone" onclick="document.getElementById('fileInput').click()">
+                <div class="dropzone-icon">
+                    <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                </div>
+                <h3>اسحب الملف هنا أو اضغط للاختيار</h3>
+                <p>ارفع مقطع صوتي أو فيديو وسيتم استخراج الصوت تلقائياً</p>
+                <div class="formats">MP4 • MP3 • WAV • M4A • WEBM • OGG • FLAC</div>
+            </div>
+            <input type="file" id="fileInput" class="file-input" accept="audio/*,video/*,.mp4,.mp3,.wav,.m4a,.webm,.ogg,.flac">
+
+            <div class="file-info" id="fileInfo">
+                <div class="file-icon">
+                    <svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+                </div>
+                <div class="file-details">
+                    <div class="file-name" id="fileName"></div>
+                    <div class="file-meta" id="fileMeta"></div>
+                </div>
+                <button class="remove-btn" onclick="removeFile()" title="حذف الملف">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+            </div>
+
+            <button class="btn-process" id="btnProcess" onclick="processFile()">
+                <span class="btn-text">تحويل إلى نص</span>
+                <div class="spinner"></div>
+            </button>
+        </div>
+
+        <!-- Results -->
+        <div class="results-section" id="resultsSection">
+
+            <!-- Audio Player -->
+            <div class="audio-player-card">
+                <h3>المقطع الصوتي</h3>
+                <audio controls id="audioPlayer"></audio>
+            </div>
+
+            <!-- Stats -->
+            <div class="stats-grid" id="statsGrid">
+                <div class="stat-card">
+                    <div class="stat-value" id="statDuration">--</div>
+                    <div class="stat-label">مدة المقطع</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="statWords">--</div>
+                    <div class="stat-label">عدد الكلمات</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="statChars">--</div>
+                    <div class="stat-label">عدد الأحرف</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="statRTF">--</div>
+                    <div class="stat-label">سرعة المعالجة</div>
+                </div>
+            </div>
+
+            <!-- Transcript -->
+            <div class="section-header">
+                <div class="icon-box">
+                    <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                </div>
+                <h2>النص المحول</h2>
+            </div>
+
+            <div class="transcript-card">
+                <div class="card-header">
+                    <h3>النتيجة</h3>
+                    <button class="copy-btn" onclick="copyTranscript()">
+                        <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        نسخ
+                    </button>
+                </div>
+                <div class="transcript-text" id="transcriptText"></div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        Saudi STT Pipeline — هيئة الزكاة والضريبة والجمارك
+    </footer>
+
+    <!-- Progress Overlay -->
+    <div class="progress-overlay" id="progressOverlay">
+        <div class="progress-box">
+            <div class="wave-animation">
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+            </div>
+            <h3>جاري المعالجة</h3>
+            <p>يتم تحويل الصوت إلى نص...</p>
+            <div class="progress-step" id="progressStep">استخراج الصوت من الملف...</div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        /* ═══════════════════════════════════════════
+           App Logic
+           ═══════════════════════════════════════════ */
+        let selectedFile = null;
+        let audioBlob = null;
+
+        const dropzone = document.getElementById('dropzone');
+        const fileInput = document.getElementById('fileInput');
+        const fileInfo = document.getElementById('fileInfo');
+        const btnProcess = document.getElementById('btnProcess');
+
+        // Drag & drop
+        ['dragenter', 'dragover'].forEach(evt => {
+            dropzone.addEventListener(evt, e => { e.preventDefault(); dropzone.classList.add('drag-over'); });
+        });
+        ['dragleave', 'drop'].forEach(evt => {
+            dropzone.addEventListener(evt, e => { e.preventDefault(); dropzone.classList.remove('drag-over'); });
+        });
+        dropzone.addEventListener('drop', e => {
+            const file = e.dataTransfer.files[0];
+            if (file) handleFile(file);
+        });
+
+        fileInput.addEventListener('change', e => {
+            if (e.target.files[0]) handleFile(e.target.files[0]);
+        });
+
+        function handleFile(file) {
+            const validTypes = ['audio/', 'video/'];
+            const validExts = ['.mp3', '.wav', '.m4a', '.mp4', '.webm', '.ogg', '.flac'];
+            const ext = '.' + file.name.split('.').pop().toLowerCase();
+
+            if (!validTypes.some(t => file.type.startsWith(t)) && !validExts.includes(ext)) {
+                showToast('الرجاء اختيار ملف صوتي أو فيديو');
+                return;
+            }
+
+            selectedFile = file;
+            document.getElementById('fileName').textContent = file.name;
+            document.getElementById('fileMeta').textContent = formatSize(file.size) + ' • ' + file.type.split('/')[0];
+            fileInfo.classList.add('visible');
+            btnProcess.classList.add('visible');
+        }
+
+        function removeFile() {
+            selectedFile = null;
+            audioBlob = null;
+            fileInput.value = '';
+            fileInfo.classList.remove('visible');
+            btnProcess.classList.remove('visible');
+        }
+
+        async function processFile() {
+            if (!selectedFile) return;
+
+            const overlay = document.getElementById('progressOverlay');
+            const step = document.getElementById('progressStep');
+            overlay.classList.add('visible');
+            btnProcess.classList.add('processing');
+
+            try {
+                // Step 1: Extract audio
+                step.textContent = 'استخراج الصوت من الملف...';
+                await sleep(300);
+
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)({ sampleRate: 16000 });
+                const arrayBuffer = await selectedFile.arrayBuffer();
+
+                step.textContent = 'فك ترميز الملف الصوتي...';
+                const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+
+                step.textContent = 'تحويل إلى تنسيق WAV...';
+                await sleep(200);
+
+                // Convert to mono 16kHz WAV
+                const mono = audioBuffer.numberOfChannels > 1
+                    ? mixToMono(audioBuffer)
+                    : audioBuffer.getChannelData(0);
+
+                // Resample if needed
+                let samples = mono;
+                if (audioBuffer.sampleRate !== 16000) {
+                    step.textContent = 'إعادة تعيين معدل العينات إلى 16kHz...';
+                    const offlineCtx = new OfflineAudioContext(1, Math.ceil(mono.length * 16000 / audioBuffer.sampleRate), 16000);
+                    const source = offlineCtx.createBufferSource();
+                    const buf = offlineCtx.createBuffer(1, mono.length, audioBuffer.sampleRate);
+                    buf.copyToChannel(mono, 0);
+                    source.buffer = buf;
+                    source.connect(offlineCtx.destination);
+                    source.start(0);
+                    const resampled = await offlineCtx.startRendering();
+                    samples = resampled.getChannelData(0);
+                }
+
+                const wavBlob = encodeWAV(samples, 16000);
+                audioBlob = wavBlob;
+
+                // Set audio player
+                const audioURL = URL.createObjectURL(wavBlob);
+                document.getElementById('audioPlayer').src = audioURL;
+
+                // Duration
+                const duration = samples.length / 16000;
+                document.getElementById('statDuration').textContent = formatDuration(duration);
+
+                step.textContent = 'جاري تحويل الصوت إلى نص...';
+
+                // Simulate STT (since we don't have a backend yet)
+                // In production, this would send to an API
+                await sleep(2000);
+
+                const demoTranscript = generateDemoTranscript(duration);
+                const words = demoTranscript.split(/\s+/).filter(w => w.length > 0);
+
+                document.getElementById('transcriptText').textContent = demoTranscript;
+                document.getElementById('statWords').textContent = words.length;
+                document.getElementById('statChars').textContent = demoTranscript.length;
+                document.getElementById('statRTF').textContent = '2.3x';
+
+                document.getElementById('resultsSection').classList.add('visible');
+                document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+            } catch (err) {
+                console.error(err);
+                showToast('حدث خطأ أثناء المعالجة: ' + err.message);
+            } finally {
+                overlay.classList.remove('visible');
+                btnProcess.classList.remove('processing');
+            }
+        }
+
+        function generateDemoTranscript(duration) {
+            // Demo transcript — in production this comes from the model API
+            const phrases = [
+                'بسم الله الرحمن الرحيم',
+                'السلام عليكم ورحمة الله وبركاته',
+                'اليوم بنتكلم عن نظام تحويل الصوت إلى نص',
+                'هذا النظام يستخدم نموذج مصري سويتش المبني على جيما',
+                'النموذج مدرب على اللهجة المصرية والتبديل بين اللغات',
+                'وبنسوي له فاين تيونينق على اللهجة السعودية',
+                'باستخدام بيانات سادا اللي فيها ست مئة وسبعة وستين ساعة',
+                'من اللهجات السعودية مثل النجدي والحجازي والخليجي',
+                'والهدف إننا نحصل على أفضل أداء في البيئات الصاخبة',
+                'لأن التطبيقات الحقيقية دايم فيها ضوضاء',
+            ];
+            const count = Math.max(1, Math.min(phrases.length, Math.ceil(duration / 3)));
+            return phrases.slice(0, count).join('.\n');
+        }
+
+        // ═══ Audio utils ═══
+        function mixToMono(audioBuffer) {
+            const len = audioBuffer.length;
+            const mono = new Float32Array(len);
+            const channels = audioBuffer.numberOfChannels;
+            for (let i = 0; i < len; i++) {
+                let sum = 0;
+                for (let ch = 0; ch < channels; ch++) sum += audioBuffer.getChannelData(ch)[i];
+                mono[i] = sum / channels;
+            }
+            return mono;
+        }
+
+        function encodeWAV(samples, sampleRate) {
+            const buffer = new ArrayBuffer(44 + samples.length * 2);
+            const view = new DataView(buffer);
+            writeString(view, 0, 'RIFF');
+            view.setUint32(4, 36 + samples.length * 2, true);
+            writeString(view, 8, 'WAVE');
+            writeString(view, 12, 'fmt ');
+            view.setUint32(16, 16, true);
+            view.setUint16(20, 1, true);
+            view.setUint16(22, 1, true);
+            view.setUint32(24, sampleRate, true);
+            view.setUint32(28, sampleRate * 2, true);
+            view.setUint16(32, 2, true);
+            view.setUint16(34, 16, true);
+            writeString(view, 36, 'data');
+            view.setUint32(40, samples.length * 2, true);
+            for (let i = 0; i < samples.length; i++) {
+                const s = Math.max(-1, Math.min(1, samples[i]));
+                view.setInt16(44 + i * 2, s < 0 ? s * 0x8000 : s * 0x7FFF, true);
+            }
+            return new Blob([buffer], { type: 'audio/wav' });
+        }
+
+        function writeString(view, offset, str) {
+            for (let i = 0; i < str.length; i++) view.setUint8(offset + i, str.charCodeAt(i));
+        }
+
+        // ═══ Helpers ═══
+        function formatSize(bytes) {
+            if (bytes < 1024) return bytes + ' B';
+            if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+            return (bytes / 1048576).toFixed(1) + ' MB';
+        }
+
+        function formatDuration(sec) {
+            const m = Math.floor(sec / 60);
+            const s = Math.floor(sec % 60);
+            return m > 0 ? `${m}:${s.toString().padStart(2, '0')}` : `${s} ث`;
+        }
+
+        function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+        function copyTranscript() {
+            const text = document.getElementById('transcriptText').textContent;
+            navigator.clipboard.writeText(text).then(() => showToast('تم نسخ النص'));
+        }
+
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 3000);
+        }
+    </script>
+</body>
+</html>
