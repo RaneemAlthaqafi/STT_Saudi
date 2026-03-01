@@ -1,7 +1,7 @@
 """
 Step 0: Benchmark Arabic STT models on SADA Saudi dialect test data.
 
-Tests 10 models across 3 architecture families (Whisper, CTC, Generative)
+Tests 12+ models across 4 architecture families (Whisper, CTC, Conformer, Generative)
 with SNR-stratified and per-dialect breakdown.
 
 Run this BEFORE fine-tuning to establish baselines.
@@ -15,7 +15,8 @@ Usage:
 Models tested:
     Whisper family:   whisper-large-v3, whisper-large-v3-turbo, Byne/arabic
     CTC family:       wav2vec2-xlsr-arabic, mms-1b-all, saudi-wav2vec2
-    Generative:       MasriSwitch-Gemma3n
+    Conformer:        NVIDIA FastConformer Arabic (NeMo)
+    Generative:       MasriSwitch-Gemma3n, Qwen2.5-Omni, Qwen3-ASR
     Faster-Whisper:   faster-whisper-large-v3 (production speed)
 """
 
@@ -80,11 +81,27 @@ MODEL_REGISTRY = {
         "type": "ctc",
         "desc": "XLS-R 300M Saudi Arabic (only Saudi-specific CTC)",
     },
+    # Conformer (NVIDIA NeMo)
+    "fastconformer-ar": {
+        "id": "nvidia/stt_ar_fastconformer_hybrid_large_pc_v1.0",
+        "type": "nemo",
+        "desc": "NVIDIA FastConformer Arabic (115M, 760h, 8.18% WER on FLEURS)",
+    },
     # Generative
     "gemma": {
         "id": "oddadmix/MasriSwitch-Gemma3n-Transcriber-v1",
         "type": "gemma",
         "desc": "MasriSwitch Gemma3n (our base model)",
+    },
+    "qwen25-omni": {
+        "id": "Qwen/Qwen2.5-Omni-7B",
+        "type": "qwen-omni",
+        "desc": "Qwen2.5-Omni 7B (multimodal, text+audio+vision)",
+    },
+    "qwen3-asr": {
+        "id": "Qwen/Qwen3-ASR-1.7B",
+        "type": "qwen-asr",
+        "desc": "Qwen3-ASR 1.7B (dedicated ASR, 30 languages, Arabic)",
     },
     # Faster-Whisper (production speed)
     "faster-whisper": {
@@ -95,7 +112,8 @@ MODEL_REGISTRY = {
 }
 
 DEFAULT_MODELS = ["whisper-v3", "whisper-v3-turbo", "whisper-arabic",
-                  "wav2vec2-arabic", "mms", "gemma"]
+                  "wav2vec2-arabic", "mms", "fastconformer-ar",
+                  "gemma", "qwen3-asr"]
 
 
 # ──────────────────────────────────────────────────────────────
@@ -189,6 +207,83 @@ def transcribe_gemma(model_and_proc, audio_array, sr=16000):
     return processor.decode(output[0][input_len:], skip_special_tokens=True).strip()
 
 
+def load_nemo(model_id):
+    import nemo.collections.asr as nemo_asr
+    model = nemo_asr.models.EncDecHybridRNNTCTCBPEModel.from_pretrained(model_name=model_id)
+    model.eval()
+    if torch.cuda.is_available():
+        model = model.cuda()
+    return model
+
+
+def transcribe_nemo(model, audio_array, sr=16000):
+    import tempfile, soundfile as sf
+    # NeMo requires file paths — write a temp wav
+    with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as f:
+        sf.write(f.name, audio_array, sr)
+        output = model.transcribe([f.name])
+    import os; os.unlink(f.name)
+    if hasattr(output[0], "text"):
+        return output[0].text
+    return str(output[0])
+
+
+def load_qwen_omni(model_id):
+    from transformers import Qwen2_5OmniForConditionalGeneration, Qwen2_5OmniProcessor
+    processor = Qwen2_5OmniProcessor.from_pretrained(model_id)
+    model = Qwen2_5OmniForConditionalGeneration.from_pretrained(
+        model_id,
+        torch_dtype=torch.bfloat16 if torch.cuda.is_available() else torch.float32,
+        device_map="auto" if torch.cuda.is_available() else None,
+    ).eval()
+    return model, processor
+
+
+def transcribe_qwen_omni(model_and_proc, audio_array, sr=16000):
+    model, processor = model_and_proc
+    import tempfile, soundfile as sf
+    # Qwen2.5-Omni expects file paths for audio
+    with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as f:
+        sf.write(f.name, audio_array, sr)
+        tmp_path = f.name
+    try:
+        from qwen_omni_utils import process_mm_info
+        conversation = [
+            {"role": "user", "content": [
+                {"type": "audio", "audio": tmp_path},
+                {"type": "text", "text": "Please transcribe this audio."},
+            ]},
+        ]
+        text = processor.apply_chat_template(conversation, add_generation_prompt=True, tokenize=False)
+        audios, images, videos = process_mm_info(conversation, use_audio_in_video=False)
+        inputs = processor(text=text, audio=audios, images=images, videos=videos,
+                           return_tensors="pt", padding=True)
+        inputs = inputs.to(model.device)
+        with torch.inference_mode():
+            text_ids = model.generate(**inputs, max_new_tokens=256, return_audio=False)
+        result = processor.batch_decode(text_ids, skip_special_tokens=True,
+                                        clean_up_tokenization_spaces=False)
+        return result[0].strip() if result else ""
+    finally:
+        import os; os.unlink(tmp_path)
+
+
+def load_qwen_asr(model_id):
+    from qwen_asr import Qwen3ASRModel
+    model = Qwen3ASRModel.from_pretrained(
+        model_id,
+        dtype=torch.bfloat16 if torch.cuda.is_available() else torch.float32,
+        device_map="cuda:0" if torch.cuda.is_available() else "cpu",
+        max_new_tokens=256,
+    )
+    return model
+
+
+def transcribe_qwen_asr(model, audio_array, sr=16000):
+    results = model.transcribe(audio=(audio_array, sr), language="Arabic")
+    return results[0].text if results else ""
+
+
 def load_faster_whisper(model_id):
     from faster_whisper import WhisperModel
     compute = "float16" if torch.cuda.is_available() else "int8"
@@ -206,7 +301,10 @@ LOADERS = {
     "whisper": (load_whisper, transcribe_whisper),
     "ctc": (load_ctc, transcribe_ctc),
     "mms": (load_mms, transcribe_mms),
+    "nemo": (load_nemo, transcribe_nemo),
     "gemma": (load_gemma, transcribe_gemma),
+    "qwen-omni": (load_qwen_omni, transcribe_qwen_omni),
+    "qwen-asr": (load_qwen_asr, transcribe_qwen_asr),
     "faster-whisper": (load_faster_whisper, transcribe_faster_whisper),
 }
 

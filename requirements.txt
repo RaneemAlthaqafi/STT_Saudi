@@ -20,7 +20,9 @@ whisper-normalizer>=1.0.0
 
 # Benchmark (optional — for scripts/00_benchmark.py)
 # faster-whisper>=1.0.0    # uncomment to benchmark Systran/faster-whisper
-# nemo_toolkit[asr]        # uncomment to benchmark NVIDIA models
+# nemo_toolkit[asr]        # uncomment to benchmark NVIDIA FastConformer
+# qwen-asr                 # uncomment to benchmark Qwen3-ASR-1.7B
+# qwen-omni-utils[decord]  # uncomment to benchmark Qwen2.5-Omni-7B
 
 # Data collection
 yt-dlp>=2024.0.0
