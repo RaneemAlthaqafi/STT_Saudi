@@ -308,7 +308,7 @@ FOOTER_HTML = """
 </div>
 """
 
-with gr.Blocks(css=ZATCA_CSS, title="Saudi STT — تحويل الصوت إلى نص", theme=gr.themes.Soft()) as demo:
+with gr.Blocks(title="Saudi STT — تحويل الصوت إلى نص") as demo:
 
     gr.HTML(HERO_HTML)
 
@@ -324,7 +324,6 @@ with gr.Blocks(css=ZATCA_CSS, title="Saudi STT — تحويل الصوت إلى 
             "تحويل إلى نص",
             variant="primary",
             size="lg",
-            elem_classes="primary-btn",
         )
 
     with gr.Column(elem_classes="card-section", visible=True):
@@ -333,7 +332,6 @@ with gr.Blocks(css=ZATCA_CSS, title="Saudi STT — تحويل الصوت إلى 
             label="",
             lines=6,
             rtl=True,
-            show_copy_button=True,
             elem_classes="transcript-box",
             placeholder="النص سيظهر هنا بعد المعالجة...",
         )
@@ -356,4 +354,5 @@ if __name__ == "__main__":
     print("Pre-loading model...")
     load_model()
     print("Starting Gradio server...")
-    demo.launch(server_name="0.0.0.0", server_port=7860, share=True)
+    demo.launch(server_name="0.0.0.0", server_port=7860, share=True,
+                css=ZATCA_CSS)
