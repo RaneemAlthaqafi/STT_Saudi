@@ -128,39 +128,55 @@ def transcribe_whisper(pipe, audio_array, sr=16000):
 # ──────────────────────────────────────────────────────────────
 
 def load_sada_test(max_samples, saudi_only=True):
-    """Load SADA22 test split with Saudi dialect filter."""
+    """Load SADA22 test split with Saudi dialect filter (streaming to save disk)."""
     import re
     from datasets import load_dataset
 
-    print("Loading SADA22 test data from HuggingFace...")
-    ds = load_dataset("MohamedRashad/SADA22", split="test")
-    print(f"  Total test: {len(ds)}")
+    print("Loading SADA22 test data from HuggingFace (streaming)...")
+    ds = load_dataset("MohamedRashad/SADA22", split="test", streaming=True)
 
+    dialects = ["najidi", "hijazi", "khaliji"]
+    samples = []
+    skipped = 0
+
+    for example in tqdm(ds, desc="Streaming SADA22"):
+        # Saudi dialect filter
+        if saudi_only:
+            dialect = str(example.get("speaker_dialect", "")).lower()
+            if dialect not in dialects:
+                skipped += 1
+                continue
+
+        # Text quality filter
+        text = example.get("cleaned_text", example.get("text", ""))
+        if len(re.findall(r'[\u0600-\u06FF]', text)) < 2:
+            skipped += 1
+            continue
+
+        # Duration filter: 2-30s
+        audio = example.get("audio", {})
+        if audio and "array" in audio and "sampling_rate" in audio:
+            dur = len(audio["array"]) / audio["sampling_rate"]
+            if not (2.0 <= dur <= 30.0):
+                skipped += 1
+                continue
+
+        samples.append(example)
+
+        if max_samples and len(samples) >= max_samples:
+            break
+
+    print(f"  Collected: {len(samples)} samples (skipped {skipped})")
     if saudi_only:
-        dialects = ["najidi", "hijazi", "khaliji"]
-        ds = ds.filter(lambda x: str(x.get("speaker_dialect", "")).lower() in dialects)
-        print(f"  Saudi only ({', '.join(dialects)}): {len(ds)}")
-
-    # Duration filter: 2-30s
-    def valid_duration(x):
-        dur = len(x["audio"]["array"]) / x["audio"]["sampling_rate"]
-        return 2.0 <= dur <= 30.0
-    ds = ds.filter(valid_duration)
-    print(f"  After duration filter (2-30s): {len(ds)}")
-
-    # Text quality filter
-    def valid_text(x):
-        text = x.get("cleaned_text", x.get("text", ""))
-        return len(re.findall(r'[\u0600-\u06FF]', text)) >= 2
-    ds = ds.filter(valid_text)
-    print(f"  After text quality filter: {len(ds)}")
-
-    if max_samples and max_samples < len(ds):
-        ds = ds.shuffle(seed=42).select(range(max_samples))
-        print(f"  Sampled: {max_samples}")
-
+        print(f"  Saudi dialects: {', '.join(dialects)}")
     print()
-    return ds
+
+    # Convert to Dataset
+    from datasets import Dataset, Audio
+    ds_dict = {key: [s[key] for s in samples] for key in samples[0].keys()}
+    result = Dataset.from_dict(ds_dict)
+    result = result.cast_column("audio", Audio(sampling_rate=16000))
+    return result
 
 
 def load_local_audio(audio_dir):
