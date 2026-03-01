@@ -105,7 +105,15 @@ def transcribe_masriswitch(model, processor, audio_array, sr=16000):
         tokenize=True, return_dict=True, return_tensors="pt",
     )
     device = next(model.parameters()).device
-    inputs = {k: v.to(device) for k, v in inputs.items()}
+    dtype = next(model.parameters()).dtype  # bfloat16
+    moved = {}
+    for k, v in inputs.items():
+        if hasattr(v, 'to'):
+            v = v.to(device)
+            if v.is_floating_point():
+                v = v.to(dtype)
+        moved[k] = v
+    inputs = moved
     input_len = inputs["input_ids"].shape[-1]
 
     with torch.inference_mode():
