@@ -40,19 +40,8 @@ def load_model():
     return MODEL, PROCESSOR
 
 
-def transcribe(audio_path):
-    """Transcribe audio file with MasriSwitch-Gemma3n."""
-    if audio_path is None:
-        return "الرجاء رفع ملف صوتي أو فيديو", "", ""
-
-    model, processor = load_model()
-
-    # Load audio
-    import librosa
-    audio_array, sr = librosa.load(audio_path, sr=16000, mono=True)
-    duration = len(audio_array) / sr
-
-    # Build chat messages
+def transcribe_chunk(model, processor, audio_array):
+    """Transcribe a single audio chunk (up to 30s)."""
     messages = [
         {"role": "system", "content": [
             {"type": "text", "text": "You are an assistant that transcribes speech accurately."}
@@ -80,13 +69,60 @@ def transcribe(audio_path):
     inputs = moved
     input_len = inputs["input_ids"].shape[-1]
 
-    # Generate
-    t0 = time.time()
     with torch.inference_mode():
         output = model.generate(**inputs, max_new_tokens=512, do_sample=False)
+
+    return processor.decode(output[0][input_len:], skip_special_tokens=True).strip()
+
+
+def split_audio_chunks(audio_array, sr=16000, chunk_sec=25, overlap_sec=2):
+    """Split long audio into overlapping chunks for better transcription."""
+    chunk_samples = chunk_sec * sr
+    overlap_samples = overlap_sec * sr
+    step = chunk_samples - overlap_samples
+
+    if len(audio_array) <= chunk_samples:
+        return [audio_array]
+
+    chunks = []
+    start = 0
+    while start < len(audio_array):
+        end = min(start + chunk_samples, len(audio_array))
+        chunk = audio_array[start:end]
+        # Skip very short trailing chunks (< 1 second)
+        if len(chunk) >= sr:
+            chunks.append(chunk)
+        start += step
+
+    return chunks
+
+
+def transcribe(audio_path):
+    """Transcribe audio file with MasriSwitch-Gemma3n (with chunking for long files)."""
+    if audio_path is None:
+        return "الرجاء رفع ملف صوتي أو فيديو", "", ""
+
+    model, processor = load_model()
+
+    # Load audio
+    import librosa
+    audio_array, sr = librosa.load(audio_path, sr=16000, mono=True)
+    duration = len(audio_array) / sr
+
+    # Split into chunks for long audio
+    chunks = split_audio_chunks(audio_array, sr=16000, chunk_sec=25, overlap_sec=2)
+    num_chunks = len(chunks)
+
+    t0 = time.time()
+    transcripts = []
+    for i, chunk in enumerate(chunks):
+        print(f"  Transcribing chunk {i+1}/{num_chunks} ({len(chunk)/16000:.1f}s)...")
+        text = transcribe_chunk(model, processor, chunk)
+        if text:
+            transcripts.append(text)
     elapsed = time.time() - t0
 
-    transcript = processor.decode(output[0][input_len:], skip_special_tokens=True).strip()
+    transcript = "\n".join(transcripts)
 
     # Stats
     words = len(transcript.split()) if transcript else 0
@@ -98,13 +134,14 @@ def transcribe(audio_path):
 | المقياس | القيمة |
 |---------|--------|
 | مدة المقطع | {format_duration(duration)} |
+| عدد المقاطع | {num_chunks} |
 | عدد الكلمات | {words} |
 | عدد الأحرف | {chars} |
 | وقت المعالجة | {elapsed:.1f} ث |
 | سرعة المعالجة | {speed} من الوقت الحقيقي |
 """
 
-    info = f"مدة: {format_duration(duration)} | كلمات: {words} | سرعة: {speed}"
+    info = f"مدة: {format_duration(duration)} | مقاطع: {num_chunks} | كلمات: {words} | سرعة: {speed}"
     return transcript, stats_md, info
 
 
