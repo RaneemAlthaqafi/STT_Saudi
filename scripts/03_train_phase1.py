@@ -58,11 +58,6 @@ def load_model(args):
             "post", "linear_start", "linear_end",
             "embedding_projection",
         ],
-        modules_to_save=[
-            "lm_head",
-            "embed_tokens",
-            "embed_audio",
-        ],
         bias="none",
     )
 

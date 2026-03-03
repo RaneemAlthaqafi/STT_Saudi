@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="stt-pipeline" name="Pipeline Overview">
-        <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="1700" math="0" shadow="0">
+        <mxGraphModel dx="935" dy="454" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="1700" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -119,7 +119,7 @@
                     <mxGeometry x="350" y="790" width="400" height="50" as="geometry"/>
                 </mxCell>
                 <mxCell id="s5w" value="Add noise tolerance carefully" style="text;html=1;align=left;verticalAlign=middle;fontSize=11;fontStyle=2;fontColor=#997a00;strokeColor=none;fillColor=none;" vertex="1" parent="1">
-                    <mxGeometry x="760" y="800" width="230" height="30" as="geometry"/>
+                    <mxGeometry x="770" y="800" width="230" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="a56" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=2;strokeColor=#4D4D4D;" edge="1" parent="1" source="s5" target="s6">
                     <mxGeometry relative="1" as="geometry"/>
@@ -128,7 +128,7 @@
                     <mxGeometry x="350" y="890" width="400" height="50" as="geometry"/>
                 </mxCell>
                 <mxCell id="s6w" value="Confirm we beat all baselines" style="text;html=1;align=left;verticalAlign=middle;fontSize=11;fontStyle=2;fontColor=#997a00;strokeColor=none;fillColor=none;" vertex="1" parent="1">
-                    <mxGeometry x="760" y="900" width="230" height="30" as="geometry"/>
+                    <mxGeometry x="770" y="900" width="230" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="a67" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=2;strokeColor=#4D4D4D;" edge="1" parent="1" source="s6" target="s7">
                     <mxGeometry relative="1" as="geometry"/>
@@ -142,7 +142,7 @@
                 <mxCell id="a7d" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=2;strokeColor=#4D4D4D;" edge="1" parent="1" source="s7" target="deploy">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="deploy" value="&lt;b&gt;Saudi Arabic STT&lt;/b&gt;&lt;br&gt;Production Ready" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fillColor=#1a1a2e;strokeColor=#16213e;fontSize=15;fontColor=#ffffff;shadow=1;size=0.5;" vertex="1" parent="1">
+                <mxCell id="deploy" value="Saudi Arabic STT&lt;br&gt;Production Ready" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fillColor=#1a1a2e;strokeColor=#16213e;fontSize=15;fontColor=#ffffff;shadow=1;size=0.5;" vertex="1" parent="1">
                     <mxGeometry x="430" y="1100" width="240" height="100" as="geometry"/>
                 </mxCell>
                 <mxCell id="targets" value="&lt;b&gt;Target Metrics&lt;/b&gt;&lt;br&gt;Clean: WER &amp;lt; 20%&lt;br&gt;Noisy: WER &amp;lt; 35%" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;shadow=1;" vertex="1" parent="1">
@@ -206,147 +206,147 @@
         </mxGraphModel>
     </diagram>
     <diagram id="why-gemma3n" name="Why MasriSwitch-Gemma3n">
-        <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="1400" math="0" shadow="0">
+        <mxGraphModel dx="1285" dy="624" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="1400" math="0" shadow="0">
             <root>
                 <mxCell id="p2_0"/>
                 <mxCell id="p2_1" parent="p2_0"/>
-                <mxCell id="p2_title" value="Why MasriSwitch-Gemma3n?" style="text;html=1;align=center;verticalAlign=middle;fontSize=24;fontStyle=1;strokeColor=none;fillColor=none;" vertex="1" parent="p2_1">
+                <mxCell id="p2_title" value="Why MasriSwitch-Gemma3n?" style="text;html=1;align=center;verticalAlign=middle;fontSize=24;fontStyle=1;strokeColor=none;fillColor=none;" parent="p2_1" vertex="1">
                     <mxGeometry x="250" y="20" width="600" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="p2_sub" value="Why this model has the highest potential for Saudi Arabic STT" style="text;html=1;align=center;verticalAlign=middle;fontSize=13;fontStyle=2;strokeColor=none;fillColor=none;fontColor=#666666;" vertex="1" parent="p2_1">
+                <mxCell id="p2_sub" value="Why this model has the highest potential for Saudi Arabic STT" style="text;html=1;align=center;verticalAlign=middle;fontSize=13;fontStyle=2;strokeColor=none;fillColor=none;fontColor=#666666;" parent="p2_1" vertex="1">
                     <mxGeometry x="250" y="55" width="600" height="25" as="geometry"/>
                 </mxCell>
-                <mxCell id="p2_model_bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1a1a2e;strokeColor=#16213e;shadow=1;arcSize=10;" vertex="1" parent="p2_1">
+                <mxCell id="p2_model_bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1a1a2e;strokeColor=#000000;shadow=1;arcSize=10;" parent="p2_1" vertex="1">
                     <mxGeometry x="300" y="100" width="500" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="p2_model_name" value="&lt;font color=&quot;#ffffff&quot;&gt;&lt;b style=&quot;font-size:15px&quot;&gt;MasriSwitch-Gemma3n-Transcriber-v1&lt;/b&gt;&lt;br&gt;Gemma 3n E4B | 8B params | Apache 2.0&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontSize=11;" vertex="1" parent="p2_1">
+                <mxCell id="p2_model_name" value="&lt;font color=&quot;#ffffff&quot;&gt;&lt;b style=&quot;font-size:15px&quot;&gt;MasriSwitch-Gemma3n-Transcriber-v1&lt;/b&gt;&lt;br&gt;Gemma 3n E4B | 8B params | Apache 2.0&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontSize=11;" parent="p2_1" vertex="1">
                     <mxGeometry x="310" y="100" width="480" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="p2_comp_title" value="Why Generative STT Beats Traditional STT" style="text;html=1;align=center;verticalAlign=middle;fontSize=15;fontStyle=1;strokeColor=none;fillColor=none;" vertex="1" parent="p2_1">
+                <mxCell id="p2_comp_title" value="Why Generative STT Beats Traditional STT" style="text;html=1;align=center;verticalAlign=middle;fontSize=15;fontStyle=1;strokeColor=none;fillColor=none;" parent="p2_1" vertex="1">
                     <mxGeometry x="200" y="195" width="700" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="p2_col1" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#CCCCCC;arcSize=8;" vertex="1" parent="p2_1">
+                <mxCell id="p2_col1" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#CCCCCC;arcSize=8;" parent="p2_1" vertex="1">
                     <mxGeometry x="120" y="240" width="280" height="190" as="geometry"/>
                 </mxCell>
-                <mxCell id="p2_col1_head" value="&lt;b&gt;Traditional STT&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#888888&quot;&gt;Whisper / wav2vec2&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;fontSize=13;strokeColor=none;fillColor=none;" vertex="1" parent="p2_1">
+                <mxCell id="p2_col1_head" value="&lt;b&gt;Traditional STT&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#888888&quot;&gt;Whisper / wav2vec2&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;fontSize=13;strokeColor=none;fillColor=none;" parent="p2_1" vertex="1">
                     <mxGeometry x="120" y="245" width="280" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="p2_col1_body" value="&lt;font color=&quot;#cc0000&quot;&gt;✗&lt;/font&gt; Fixed audio encoder&lt;br&gt;&lt;font color=&quot;#cc0000&quot;&gt;✗&lt;/font&gt; No language understanding&lt;br&gt;&lt;font color=&quot;#cc0000&quot;&gt;✗&lt;/font&gt; Cannot reason about context&lt;br&gt;&lt;font color=&quot;#cc0000&quot;&gt;✗&lt;/font&gt; Struggles with code-switching&lt;br&gt;&lt;font color=&quot;#00aa00&quot;&gt;✓&lt;/font&gt; Fast inference" style="text;html=1;align=left;verticalAlign=top;fontSize=12;strokeColor=none;fillColor=none;spacingLeft=15;spacingTop=5;lineHeight=1.5;" vertex="1" parent="p2_1">
+                <mxCell id="p2_col1_body" value="&lt;font color=&quot;#cc0000&quot;&gt;✗&lt;/font&gt; Fixed audio encoder&lt;br&gt;&lt;font color=&quot;#cc0000&quot;&gt;✗&lt;/font&gt; No language understanding&lt;br&gt;&lt;font color=&quot;#cc0000&quot;&gt;✗&lt;/font&gt; Cannot reason about context&lt;br&gt;&lt;font color=&quot;#cc0000&quot;&gt;✗&lt;/font&gt; Struggles with code-switching&lt;br&gt;&lt;font color=&quot;#00aa00&quot;&gt;✓&lt;/font&gt; Fast inference" style="text;html=1;align=left;verticalAlign=top;fontSize=12;strokeColor=none;fillColor=none;spacingLeft=15;spacingTop=5;lineHeight=1.5;" parent="p2_1" vertex="1">
                     <mxGeometry x="120" y="290" width="280" height="130" as="geometry"/>
                 </mxCell>
-                <mxCell id="p2_col3" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#2e7d32;strokeWidth=3;arcSize=8;shadow=1;" vertex="1" parent="p2_1">
+                <mxCell id="p2_col3" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#2e7d32;strokeWidth=3;arcSize=8;shadow=1;" parent="p2_1" vertex="1">
                     <mxGeometry x="500" y="240" width="280" height="190" as="geometry"/>
                 </mxCell>
-                <mxCell id="p2_col3_head" value="&lt;b&gt;MasriSwitch-Gemma3n&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#2e7d32&quot;&gt;Our Approach&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;fontSize=13;strokeColor=none;fillColor=none;" vertex="1" parent="p2_1">
+                <mxCell id="p2_col3_head" value="&lt;b&gt;MasriSwitch-Gemma3n&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#2e7d32&quot;&gt;Our Approach&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;fontSize=13;strokeColor=none;fillColor=none;" parent="p2_1" vertex="1">
                     <mxGeometry x="500" y="245" width="280" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="p2_col3_body" value="&lt;font color=&quot;#00aa00&quot;&gt;✓&lt;/font&gt; Understands language&lt;br&gt;&lt;font color=&quot;#00aa00&quot;&gt;✓&lt;/font&gt; Reasons about context&lt;br&gt;&lt;font color=&quot;#00aa00&quot;&gt;✓&lt;/font&gt; Built-in code-switching&lt;br&gt;&lt;font color=&quot;#00aa00&quot;&gt;✓&lt;/font&gt; Already speaks Arabic&lt;br&gt;&lt;font color=&quot;#00aa00&quot;&gt;✓&lt;/font&gt; Fits 16 GB VRAM (4-bit)" style="text;html=1;align=left;verticalAlign=top;fontSize=12;strokeColor=none;fillColor=none;spacingLeft=15;spacingTop=5;lineHeight=1.5;" vertex="1" parent="p2_1">
+                <mxCell id="p2_col3_body" value="&lt;font color=&quot;#00aa00&quot;&gt;✓&lt;/font&gt; Understands language&lt;br&gt;&lt;font color=&quot;#00aa00&quot;&gt;✓&lt;/font&gt; Reasons about context&lt;br&gt;&lt;font color=&quot;#00aa00&quot;&gt;✓&lt;/font&gt; Built-in code-switching&lt;br&gt;&lt;font color=&quot;#00aa00&quot;&gt;✓&lt;/font&gt; Already speaks Arabic&lt;br&gt;&lt;font color=&quot;#00aa00&quot;&gt;✓&lt;/font&gt; Fits 16 GB VRAM (4-bit)" style="text;html=1;align=left;verticalAlign=top;fontSize=12;strokeColor=none;fillColor=none;spacingLeft=15;spacingTop=5;lineHeight=1.5;" parent="p2_1" vertex="1">
                     <mxGeometry x="500" y="290" width="280" height="130" as="geometry"/>
                 </mxCell>
-                <mxCell id="p2_star" value="OUR CHOICE" style="text;html=1;align=center;verticalAlign=middle;fontSize=10;fontStyle=1;fontColor=#ffffff;strokeColor=none;fillColor=#2e7d32;rounded=1;arcSize=50;" vertex="1" parent="p2_1">
+                <mxCell id="p2_star" value="OUR CHOICE" style="text;html=1;align=center;verticalAlign=middle;fontSize=10;fontStyle=1;fontColor=#ffffff;strokeColor=none;fillColor=#2e7d32;rounded=1;arcSize=50;" parent="p2_1" vertex="1">
                     <mxGeometry x="590" y="225" width="90" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="p2_vs" value="vs" style="text;html=1;align=center;verticalAlign=middle;fontSize=18;fontStyle=1;fontColor=#999999;strokeColor=none;fillColor=none;" vertex="1" parent="p2_1">
+                <mxCell id="p2_vs" value="vs" style="text;html=1;align=center;verticalAlign=middle;fontSize=18;fontStyle=1;fontColor=#999999;strokeColor=none;fillColor=none;" parent="p2_1" vertex="1">
                     <mxGeometry x="420" y="310" width="60" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="p2_adv_title" value="4 Key Advantages for Saudi STT" style="text;html=1;align=center;verticalAlign=middle;fontSize=15;fontStyle=1;strokeColor=none;fillColor=none;" vertex="1" parent="p2_1">
+                <mxCell id="p2_adv_title" value="4 Key Advantages for Saudi STT" style="text;html=1;align=center;verticalAlign=middle;fontSize=15;fontStyle=1;strokeColor=none;fillColor=none;" parent="p2_1" vertex="1">
                     <mxGeometry x="200" y="460" width="700" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="p2_a1" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;arcSize=12;shadow=1;" vertex="1" parent="p2_1">
+                <mxCell id="p2_a1" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;arcSize=12;shadow=1;" parent="p2_1" vertex="1">
                     <mxGeometry x="60" y="505" width="230" height="110" as="geometry"/>
                 </mxCell>
-                <mxCell id="p2_a1_icon" value="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#6c8ebf;strokeColor=none;fontColor=#ffffff;fontSize=14;fontStyle=1;" vertex="1" parent="p2_1">
+                <mxCell id="p2_a1_icon" value="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#6c8ebf;strokeColor=none;fontColor=#ffffff;fontSize=14;fontStyle=1;" parent="p2_1" vertex="1">
                     <mxGeometry x="70" y="512" width="30" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="p2_a1_title" value="&lt;b&gt;Already Speaks Arabic&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=middle;fontSize=12;strokeColor=none;fillColor=none;" vertex="1" parent="p2_1">
+                <mxCell id="p2_a1_title" value="&lt;b&gt;Already Speaks Arabic&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=middle;fontSize=12;strokeColor=none;fillColor=none;" parent="p2_1" vertex="1">
                     <mxGeometry x="105" y="512" width="175" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="p2_a1_body" value="Pre-trained on Egyptian Arabic.&lt;br&gt;Only needs dialect shift,&lt;br&gt;not learning Arabic from zero." style="text;html=1;align=left;verticalAlign=top;fontSize=11;strokeColor=none;fillColor=none;spacingLeft=10;" vertex="1" parent="p2_1">
+                <mxCell id="p2_a1_body" value="Pre-trained on Egyptian Arabic.&lt;br&gt;Only needs dialect shift,&lt;br&gt;not learning Arabic from zero." style="text;html=1;align=left;verticalAlign=top;fontSize=11;strokeColor=none;fillColor=none;spacingLeft=10;" parent="p2_1" vertex="1">
                     <mxGeometry x="65" y="548" width="215" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="p2_a2" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;arcSize=12;shadow=1;" vertex="1" parent="p2_1">
+                <mxCell id="p2_a2" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;arcSize=12;shadow=1;" parent="p2_1" vertex="1">
                     <mxGeometry x="310" y="505" width="230" height="110" as="geometry"/>
                 </mxCell>
-                <mxCell id="p2_a2_icon" value="2" style="ellipse;whiteSpace=wrap;html=1;fillColor=#82b366;strokeColor=none;fontColor=#ffffff;fontSize=14;fontStyle=1;" vertex="1" parent="p2_1">
+                <mxCell id="p2_a2_icon" value="2" style="ellipse;whiteSpace=wrap;html=1;fillColor=#82b366;strokeColor=none;fontColor=#ffffff;fontSize=14;fontStyle=1;" parent="p2_1" vertex="1">
                     <mxGeometry x="320" y="512" width="30" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="p2_a2_title" value="&lt;b&gt;Multimodal Brain&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=middle;fontSize=12;strokeColor=none;fillColor=none;" vertex="1" parent="p2_1">
+                <mxCell id="p2_a2_title" value="&lt;b&gt;Multimodal Brain&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=middle;fontSize=12;strokeColor=none;fillColor=none;" parent="p2_1" vertex="1">
                     <mxGeometry x="355" y="512" width="175" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="p2_a2_body" value="Audio + Text in one model.&lt;br&gt;The LLM &lt;i&gt;understands&lt;/i&gt; speech,&lt;br&gt;not just maps sound to text." style="text;html=1;align=left;verticalAlign=top;fontSize=11;strokeColor=none;fillColor=none;spacingLeft=10;" vertex="1" parent="p2_1">
+                <mxCell id="p2_a2_body" value="Audio + Text in one model.&lt;br&gt;The LLM &lt;i&gt;understands&lt;/i&gt; speech,&lt;br&gt;not just maps sound to text." style="text;html=1;align=left;verticalAlign=top;fontSize=11;strokeColor=none;fillColor=none;spacingLeft=10;" parent="p2_1" vertex="1">
                     <mxGeometry x="315" y="548" width="215" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="p2_a3" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;arcSize=12;shadow=1;" vertex="1" parent="p2_1">
+                <mxCell id="p2_a3" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;arcSize=12;shadow=1;" parent="p2_1" vertex="1">
                     <mxGeometry x="560" y="505" width="230" height="110" as="geometry"/>
                 </mxCell>
-                <mxCell id="p2_a3_icon" value="3" style="ellipse;whiteSpace=wrap;html=1;fillColor=#9673a6;strokeColor=none;fontColor=#ffffff;fontSize=14;fontStyle=1;" vertex="1" parent="p2_1">
+                <mxCell id="p2_a3_icon" value="3" style="ellipse;whiteSpace=wrap;html=1;fillColor=#9673a6;strokeColor=none;fontColor=#ffffff;fontSize=14;fontStyle=1;" parent="p2_1" vertex="1">
                     <mxGeometry x="570" y="512" width="30" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="p2_a3_title" value="&lt;b&gt;Code-Switching&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=middle;fontSize=12;strokeColor=none;fillColor=none;" vertex="1" parent="p2_1">
+                <mxCell id="p2_a3_title" value="&lt;b&gt;Code-Switching&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=middle;fontSize=12;strokeColor=none;fillColor=none;" parent="p2_1" vertex="1">
                     <mxGeometry x="605" y="512" width="175" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="p2_a3_body" value="Saudis mix Arabic + English.&lt;br&gt;MasriSwitch was trained&lt;br&gt;specifically for this." style="text;html=1;align=left;verticalAlign=top;fontSize=11;strokeColor=none;fillColor=none;spacingLeft=10;" vertex="1" parent="p2_1">
+                <mxCell id="p2_a3_body" value="Saudis mix Arabic + English.&lt;br&gt;MasriSwitch was trained&lt;br&gt;specifically for this." style="text;html=1;align=left;verticalAlign=top;fontSize=11;strokeColor=none;fillColor=none;spacingLeft=10;" parent="p2_1" vertex="1">
                     <mxGeometry x="565" y="548" width="215" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="p2_a4" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;arcSize=12;shadow=1;" vertex="1" parent="p2_1">
+                <mxCell id="p2_a4" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;arcSize=12;shadow=1;" parent="p2_1" vertex="1">
                     <mxGeometry x="810" y="505" width="230" height="110" as="geometry"/>
                 </mxCell>
-                <mxCell id="p2_a4_icon" value="4" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d6b656;strokeColor=none;fontColor=#ffffff;fontSize=14;fontStyle=1;" vertex="1" parent="p2_1">
+                <mxCell id="p2_a4_icon" value="4" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d6b656;strokeColor=none;fontColor=#ffffff;fontSize=14;fontStyle=1;" parent="p2_1" vertex="1">
                     <mxGeometry x="820" y="512" width="30" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="p2_a4_title" value="&lt;b&gt;Efficient + Open&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=middle;fontSize=12;strokeColor=none;fillColor=none;" vertex="1" parent="p2_1">
+                <mxCell id="p2_a4_title" value="&lt;b&gt;Efficient + Open&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=middle;fontSize=12;strokeColor=none;fillColor=none;" parent="p2_1" vertex="1">
                     <mxGeometry x="855" y="512" width="175" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="p2_a4_body" value="QLoRA 4-bit fits 16 GB GPU.&lt;br&gt;Apache 2.0 license.&lt;br&gt;Free for commercial use." style="text;html=1;align=left;verticalAlign=top;fontSize=11;strokeColor=none;fillColor=none;spacingLeft=10;" vertex="1" parent="p2_1">
+                <mxCell id="p2_a4_body" value="QLoRA 4-bit fits 16 GB GPU.&lt;br&gt;Apache 2.0 license.&lt;br&gt;Free for commercial use." style="text;html=1;align=left;verticalAlign=top;fontSize=11;strokeColor=none;fillColor=none;spacingLeft=10;" parent="p2_1" vertex="1">
                     <mxGeometry x="815" y="548" width="215" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="p2_flow_title" value="Transfer Learning Path" style="text;html=1;align=center;verticalAlign=middle;fontSize=15;fontStyle=1;strokeColor=none;fillColor=none;" vertex="1" parent="p2_1">
+                <mxCell id="p2_flow_title" value="Transfer Learning Path" style="text;html=1;align=center;verticalAlign=middle;fontSize=15;fontStyle=1;strokeColor=none;fillColor=none;" parent="p2_1" vertex="1">
                     <mxGeometry x="200" y="650" width="700" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="p2_f1" value="&lt;b&gt;Gemma 3n&lt;/b&gt;&lt;br&gt;General LLM" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#999999;fontSize=13;shadow=1;arcSize=20;" vertex="1" parent="p2_1">
+                <mxCell id="p2_f1" value="&lt;b&gt;Gemma 3n&lt;/b&gt;&lt;br&gt;General LLM" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#999999;fontSize=13;shadow=1;arcSize=20;" parent="p2_1" vertex="1">
                     <mxGeometry x="100" y="700" width="200" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="p2_fa1" value="+ Egyptian Arabic" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=2;strokeColor=#4D4D4D;fontSize=10;fontColor=#4D4D4D;" edge="1" source="p2_f1" target="p2_f2" parent="p2_1">
+                <mxCell id="p2_fa1" value="+ Egyptian Arabic" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=2;strokeColor=#4D4D4D;fontSize=10;fontColor=#4D4D4D;" parent="p2_1" source="p2_f1" target="p2_f2" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="p2_f2" value="&lt;b&gt;MasriSwitch&lt;/b&gt;&lt;br&gt;Arabic + code-switch" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;shadow=1;arcSize=20;" vertex="1" parent="p2_1">
+                <mxCell id="p2_f2" value="&lt;b&gt;MasriSwitch&lt;/b&gt;&lt;br&gt;Arabic + code-switch" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;shadow=1;arcSize=20;" parent="p2_1" vertex="1">
                     <mxGeometry x="450" y="700" width="200" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="p2_fa2" value="+ Saudi dialect + noise" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=2;strokeColor=#2e7d32;fontSize=10;fontColor=#2e7d32;fontStyle=1;" edge="1" source="p2_f2" target="p2_f3" parent="p2_1">
+                <mxCell id="p2_fa2" value="+ Saudi dialect + noise" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=2;strokeColor=#2e7d32;fontSize=10;fontColor=#2e7d32;fontStyle=1;" parent="p2_1" source="p2_f2" target="p2_f3" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="p2_f3" value="&lt;b&gt;Our Saudi STT&lt;/b&gt;&lt;br&gt;Dialect + noise robust" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2e7d32;strokeColor=#1b5e20;fontSize=13;fontColor=#ffffff;shadow=1;arcSize=20;" vertex="1" parent="p2_1">
+                <mxCell id="p2_f3" value="&lt;b&gt;Our Saudi STT&lt;/b&gt;&lt;br&gt;Dialect + noise robust" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2e7d32;strokeColor=#1b5e20;fontSize=13;fontColor=#ffffff;shadow=1;arcSize=20;" parent="p2_1" vertex="1">
                     <mxGeometry x="800" y="700" width="200" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="p2_flow_note" value="Knowledge compounds at each step — we never start from scratch" style="text;html=1;align=center;verticalAlign=middle;fontSize=11;fontStyle=2;fontColor=#666666;strokeColor=none;fillColor=none;" vertex="1" parent="p2_1">
+                <mxCell id="p2_flow_note" value="Knowledge compounds at each step — we never start from scratch" style="text;html=1;align=center;verticalAlign=middle;fontSize=11;fontStyle=2;fontColor=#666666;strokeColor=none;fillColor=none;" parent="p2_1" vertex="1">
                     <mxGeometry x="250" y="760" width="600" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="p2_alt_title" value="Why Not The Others?" style="text;html=1;align=center;verticalAlign=middle;fontSize=15;fontStyle=1;strokeColor=none;fillColor=none;" vertex="1" parent="p2_1">
+                <mxCell id="p2_alt_title" value="Why Not The Others?" style="text;html=1;align=center;verticalAlign=middle;fontSize=15;fontStyle=1;strokeColor=none;fillColor=none;" parent="p2_1" vertex="1">
                     <mxGeometry x="200" y="810" width="700" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="p2_r1" value="&lt;b&gt;Whisper-v3&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#888888&quot; style=&quot;font-size:10px&quot;&gt;No dialect awareness&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;arcSize=20;" vertex="1" parent="p2_1">
+                <mxCell id="p2_r1" value="&lt;b&gt;Whisper-v3&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#888888&quot; style=&quot;font-size:10px&quot;&gt;No dialect awareness&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;arcSize=20;" parent="p2_1" vertex="1">
                     <mxGeometry x="80" y="855" width="160" height="45" as="geometry"/>
                 </mxCell>
-                <mxCell id="p2_r2" value="&lt;b&gt;wav2vec2&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#888888&quot; style=&quot;font-size:10px&quot;&gt;No language model inside&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;arcSize=20;" vertex="1" parent="p2_1">
+                <mxCell id="p2_r2" value="&lt;b&gt;wav2vec2&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#888888&quot; style=&quot;font-size:10px&quot;&gt;No language model inside&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;arcSize=20;" parent="p2_1" vertex="1">
                     <mxGeometry x="260" y="855" width="160" height="45" as="geometry"/>
                 </mxCell>
-                <mxCell id="p2_r3" value="&lt;b&gt;FastConformer&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#888888&quot; style=&quot;font-size:10px&quot;&gt;MSA only, no dialects&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;arcSize=20;" vertex="1" parent="p2_1">
+                <mxCell id="p2_r3" value="&lt;b&gt;FastConformer&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#888888&quot; style=&quot;font-size:10px&quot;&gt;MSA only, no dialects&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;arcSize=20;" parent="p2_1" vertex="1">
                     <mxGeometry x="440" y="855" width="160" height="45" as="geometry"/>
                 </mxCell>
-                <mxCell id="p2_r4" value="&lt;b&gt;Qwen-Omni&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#888888&quot; style=&quot;font-size:10px&quot;&gt;Too large (31 GB VRAM)&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;arcSize=20;" vertex="1" parent="p2_1">
+                <mxCell id="p2_r4" value="&lt;b&gt;Qwen-Omni&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#888888&quot; style=&quot;font-size:10px&quot;&gt;Too large (31 GB VRAM)&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;arcSize=20;" parent="p2_1" vertex="1">
                     <mxGeometry x="620" y="855" width="160" height="45" as="geometry"/>
                 </mxCell>
-                <mxCell id="p2_r5" value="&lt;b&gt;Qwen3-ASR&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#888888&quot; style=&quot;font-size:10px&quot;&gt;No Arabic dialect data&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;arcSize=20;" vertex="1" parent="p2_1">
+                <mxCell id="p2_r5" value="&lt;b&gt;Qwen3-ASR&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#888888&quot; style=&quot;font-size:10px&quot;&gt;No Arabic dialect data&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;arcSize=20;" parent="p2_1" vertex="1">
                     <mxGeometry x="800" y="855" width="160" height="45" as="geometry"/>
                 </mxCell>
-                <mxCell id="p2_r_note" value="All benchmarked in Step 0 — we let data decide, not assumptions" style="text;html=1;align=center;verticalAlign=middle;fontSize=10;fontStyle=2;fontColor=#888888;strokeColor=none;fillColor=none;" vertex="1" parent="p2_1">
+                <mxCell id="p2_r_note" value="All benchmarked in Step 0 — we let data decide, not assumptions" style="text;html=1;align=center;verticalAlign=middle;fontSize=10;fontStyle=2;fontColor=#888888;strokeColor=none;fillColor=none;" parent="p2_1" vertex="1">
                     <mxGeometry x="200" y="910" width="700" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="p2_bottom_bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#2e7d32;strokeWidth=2;arcSize=10;shadow=1;" vertex="1" parent="p2_1">
-                    <mxGeometry x="220" y="960" width="660" height="70" as="geometry"/>
+                <mxCell id="p2_bottom_bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#2e7d32;strokeWidth=2;arcSize=10;shadow=1;" parent="p2_1" vertex="1">
+                    <mxGeometry x="100" y="960" width="890" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="p2_bottom_text" value="&lt;b style=&quot;font-size:13px&quot;&gt;Bottom Line:&lt;/b&gt; The only model combining &lt;b&gt;Arabic knowledge&lt;/b&gt; + &lt;b&gt;code-switching&lt;/b&gt; + &lt;b&gt;language understanding&lt;/b&gt; + &lt;b&gt;efficient fine-tuning&lt;/b&gt; in one open-source package." style="text;html=1;align=center;verticalAlign=middle;fontSize=12;strokeColor=none;fillColor=none;" vertex="1" parent="p2_1">
-                    <mxGeometry x="230" y="965" width="640" height="60" as="geometry"/>
+                <mxCell id="p2_bottom_text" value="&lt;b style=&quot;font-size:13px&quot;&gt;Bottom Line:&lt;/b&gt; The only model combining &lt;b&gt;Arabic knowledge&lt;/b&gt; + &lt;b&gt;code-switching&lt;/b&gt; + &lt;b&gt;language understanding&lt;/b&gt; + &lt;b&gt;efficient fine-tuning&lt;/b&gt; in one open-source package." style="text;html=1;align=center;verticalAlign=middle;fontSize=12;strokeColor=none;fillColor=none;" parent="p2_1" vertex="1">
+                    <mxGeometry x="220" y="965" width="650" height="60" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>
