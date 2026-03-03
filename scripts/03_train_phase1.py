@@ -13,12 +13,18 @@ import os
 import sys
 from pathlib import Path
 
+import numpy as np
 import torch
 from datasets import load_from_disk
 from trl import SFTTrainer, SFTConfig
+from transformers import TrainerCallback, EarlyStoppingCallback
 
 # Fix torch compilation cache issue on some GPUs
 torch._dynamo.config.cache_size_limit = 32
+
+sys.path.insert(0, str(Path(__file__).parent))
+from segment import apply_duration_filter
+from utils.arabic_normalizer import normalize_arabic_for_eval
 
 
 def load_model(args):
@@ -149,8 +155,18 @@ def main(args):
     train_data = load_from_disk(str(Path(args.data_dir) / "train"))
     eval_data = load_from_disk(str(Path(args.data_dir) / "eval"))
 
-    print(f"Train samples: {len(train_data)}")
-    print(f"Eval samples: {len(eval_data)}")
+    print(f"Train samples (before filter): {len(train_data)}")
+    print(f"Eval samples (before filter):  {len(eval_data)}")
+
+    # Apply duration filter: keep only 5-30s samples
+    # This is CRITICAL — short clips (<3s) cause poor gradient signal,
+    # and clips >30s overflow the model's audio context.
+    print("\nApplying duration filter (5-30s)...")
+    train_data = apply_duration_filter(train_data, min_sec=5.0, max_sec=30.0)
+    eval_data  = apply_duration_filter(eval_data,  min_sec=5.0, max_sec=30.0)
+
+    print(f"Train samples (after filter): {len(train_data)}")
+    print(f"Eval samples (after filter):  {len(eval_data)}")
 
     # Limit samples if specified (for quick testing)
     if args.max_train_samples:
@@ -200,12 +216,15 @@ def main(args):
         # Logging
         logging_steps=args.logging_steps,
         logging_first_step=True,
-        report_to="none",  # Change to "wandb" if you want W&B logging
+        report_to="none",
 
-        # Saving
+        # Saving — save best checkpoint for early stopping
         save_strategy="steps",
         save_steps=args.save_steps,
         save_total_limit=3,
+        load_best_model_at_end=True,
+        metric_for_best_model="eval_loss",
+        greater_is_better=False,
 
         # Evaluation
         eval_strategy="steps",
@@ -223,9 +242,71 @@ def main(args):
     )
 
     # -------------------------------------------------------------------------
-    # 5. Create trainer
+    # 5. WER logging callback
+    # Logs WER on a small eval subset at each checkpoint step.
+    # Gives a real-world signal beyond eval_loss.
+    # -------------------------------------------------------------------------
+    class WERLoggingCallback(TrainerCallback):
+        def __init__(self, model, processor, eval_data, log_n=50):
+            self.model = model
+            self.processor = processor
+            # Fixed sample of 50 for fast WER check
+            n = min(log_n, len(eval_data))
+            self.eval_subset = eval_data.select(range(n))
+            self.wer_history = []
+
+        def on_evaluate(self, args, state, control, **kwargs):
+            from jiwer import wer as compute_wer
+            self.model.eval()
+            device = next(self.model.parameters()).device
+            dtype = next(self.model.parameters()).dtype
+
+            predictions, references = [], []
+            for example in self.eval_subset:
+                audio_array = np.array(example["audio"]["array"], dtype=np.float32)
+                reference = example["transcript"]
+                messages = [
+                    {"role": "system", "content": [{"type": "text", "text": "You are an assistant that transcribes speech accurately."}]},
+                    {"role": "user", "content": [
+                        {"type": "audio", "audio": audio_array},
+                        {"type": "text", "text": "Please transcribe this audio."}
+                    ]},
+                ]
+                try:
+                    inputs = self.processor.apply_chat_template(
+                        messages, add_generation_prompt=True,
+                        tokenize=True, return_dict=True, return_tensors="pt",
+                    )
+                    moved = {}
+                    for k, v in inputs.items():
+                        if hasattr(v, "to"):
+                            v = v.to(device)
+                            if v.is_floating_point():
+                                v = v.to(dtype)
+                        moved[k] = v
+                    input_len = moved["input_ids"].shape[-1]
+                    with torch.inference_mode():
+                        out = self.model.generate(**moved, max_new_tokens=256, do_sample=False)
+                    text = self.processor.decode(out[0][input_len:], skip_special_tokens=True).strip()
+                    predictions.append(normalize_arabic_for_eval(text))
+                    references.append(normalize_arabic_for_eval(reference))
+                except Exception:
+                    pass
+
+            if predictions:
+                step_wer = compute_wer(references, predictions) * 100
+                self.wer_history.append({"step": state.global_step, "wer": round(step_wer, 2)})
+                print(f"\n[WER @ step {state.global_step}] WER = {step_wer:.2f}%  "
+                      f"(on {len(predictions)} samples)")
+
+            self.model.train()
+
+    # -------------------------------------------------------------------------
+    # 5b. Create trainer
     # -------------------------------------------------------------------------
     collate_fn = create_collate_fn(processor)
+
+    wer_callback = WERLoggingCallback(model, processor, eval_data, log_n=50)
 
     trainer = SFTTrainer(
         model=model,
@@ -233,6 +314,10 @@ def main(args):
         train_dataset=train_data,
         eval_dataset=eval_data,
         data_collator=collate_fn,
+        callbacks=[
+            wer_callback,
+            EarlyStoppingCallback(early_stopping_patience=3),
+        ],
     )
 
     # -------------------------------------------------------------------------
@@ -263,11 +348,22 @@ def main(args):
     trainer.train(resume_from_checkpoint=args.resume_from_checkpoint)
 
     # -------------------------------------------------------------------------
-    # 7. Save final model
+    # 7. Save final model + WER history
     # -------------------------------------------------------------------------
     print("\nSaving final model...")
     trainer.save_model(str(output_dir / "final"))
     processor.save_pretrained(str(output_dir / "final"))
+
+    # Save WER history to disk
+    if wer_callback.wer_history:
+        import json
+        wer_log_path = output_dir / "wer_history.json"
+        with open(wer_log_path, "w") as f:
+            json.dump(wer_callback.wer_history, f, indent=2)
+        print(f"\nWER history saved to: {wer_log_path}")
+        print("WER progress:")
+        for entry in wer_callback.wer_history:
+            print(f"  step {entry['step']:>6}: WER = {entry['wer']:.2f}%")
 
     print(f"\nPhase 1 training complete!")
     print(f"Model saved to: {output_dir / 'final'}")
