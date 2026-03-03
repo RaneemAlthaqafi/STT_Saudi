@@ -98,9 +98,11 @@ def main(args):
         # Prepare transcript
         transcript = normalize_arabic_for_training(text)
 
-        # Store sample
+        # Store minimal metadata only (NOT the audio array)
+        # Audio path is saved to disk immediately to avoid RAM buildup
         samples.append({
-            "audio": audio,
+            "audio_array": audio["array"],
+            "sampling_rate": audio["sampling_rate"],
             "transcript": transcript,
             "speaker_dialect": dialect,
             "duration_seconds": round(duration, 2),
@@ -141,12 +143,31 @@ def main(args):
         print("\nConsider re-running with --use_all_sada to use all dialects.")
 
     # -------------------------------------------------------------------------
-    # 3. Convert to HuggingFace Dataset
+    # 3. Convert to HuggingFace Dataset in small batches to avoid RAM spike
     # -------------------------------------------------------------------------
-    print("\nConverting to HuggingFace Dataset...")
-    ds_dict = {key: [s[key] for s in samples] for key in samples[0].keys()}
-    saudi_data = Dataset.from_dict(ds_dict)
-    saudi_data = saudi_data.cast_column("audio", Audio(sampling_rate=16000))
+    print("\nConverting to HuggingFace Dataset (batch mode, low RAM)...")
+    BATCH_SIZE = 500  # process 500 samples at a time
+
+    batch_datasets = []
+    for i in range(0, len(samples), BATCH_SIZE):
+        batch = samples[i:i + BATCH_SIZE]
+        batch_dict = {
+            "audio": [{"array": s["audio_array"], "sampling_rate": s["sampling_rate"]} for s in batch],
+            "transcript": [s["transcript"] for s in batch],
+            "speaker_dialect": [s["speaker_dialect"] for s in batch],
+            "duration_seconds": [s["duration_seconds"] for s in batch],
+        }
+        ds_batch = Dataset.from_dict(batch_dict)
+        ds_batch = ds_batch.cast_column("audio", Audio(sampling_rate=16000))
+        batch_datasets.append(ds_batch)
+        print(f"  Converted batch {i//BATCH_SIZE + 1}/{(len(samples)-1)//BATCH_SIZE + 1} "
+              f"({min(i+BATCH_SIZE, len(samples))}/{len(samples)} samples)")
+        # Free the raw batch from memory
+        del batch, batch_dict
+
+    from datasets import concatenate_datasets
+    saudi_data = concatenate_datasets(batch_datasets)
+    del batch_datasets
 
     # -------------------------------------------------------------------------
     # 4. Compute stats
