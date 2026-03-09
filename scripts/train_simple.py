@@ -1,6 +1,7 @@
 """
 Simple Phase 1 training — no Unsloth, pure HuggingFace + PEFT.
-Avoids all Unsloth/AltUp/dynamo compilation bugs.
+Minimal version of 03_train_phase1.py without SFTTrainer dependency.
+Uses standard Trainer instead.
 
 Usage:
     python scripts/train_simple.py \
@@ -10,15 +11,21 @@ Usage:
 
 import argparse
 import json
-import os
 import sys
 import numpy as np
 import torch
 from pathlib import Path
 from datasets import load_from_disk
-from transformers import AutoProcessor, AutoModelForImageTextToText, TrainingArguments, Trainer, TrainerCallback, EarlyStoppingCallback
+from transformers import (
+    AutoProcessor,
+    Gemma3nForConditionalGeneration,
+    TrainingArguments,
+    Trainer,
+    TrainerCallback,
+    EarlyStoppingCallback,
+    BitsAndBytesConfig,
+)
 from peft import get_peft_model, LoraConfig, TaskType
-from tqdm import tqdm
 
 sys.path.insert(0, str(Path(__file__).parent))
 from utils.arabic_normalizer import normalize_arabic_for_eval
@@ -29,17 +36,27 @@ def load_model(args):
     print(f"Loading model: {args.model_name}")
     processor = AutoProcessor.from_pretrained(args.model_name)
 
-    model = AutoModelForImageTextToText.from_pretrained(
-        args.model_name,
-        torch_dtype=torch.bfloat16,
-        device_map="auto",
+    bnb_config = BitsAndBytesConfig(
+        load_in_4bit=True,
+        bnb_4bit_quant_type="nf4",
+        bnb_4bit_compute_dtype=torch.bfloat16,
+        bnb_4bit_use_double_quant=True,
     )
 
-    # LoRA config — no modules_to_save to avoid quantized tensor issue
+    model = Gemma3nForConditionalGeneration.from_pretrained(
+        args.model_name,
+        quantization_config=bnb_config,
+        torch_dtype=torch.bfloat16,
+        device_map="auto",
+        attn_implementation="eager",
+    )
+
+    model.config.use_cache = False
+
     lora_config = LoraConfig(
         r=args.lora_r,
         lora_alpha=args.lora_alpha,
-        lora_dropout=0.0,  # 0 avoids unsloth warning, required for compile
+        lora_dropout=0.0,
         target_modules=[
             "q_proj", "k_proj", "v_proj", "o_proj",
             "gate_proj", "up_proj", "down_proj",
@@ -67,10 +84,24 @@ def format_for_training(example):
             "content": [{"type": "text", "text": example["transcript"]}]
         }
     ]
-    return {"messages": messages, "audio_array": example["audio"]["array"], "transcript": example["transcript"]}
+    return {
+        "messages": messages,
+        "audio_array": example["audio"]["array"],
+        "transcript": example["transcript"],
+    }
 
 
 def create_collate_fn(processor):
+    response_marker = "<start_of_turn>model\n"
+    marker_ids = processor.tokenizer.encode(response_marker, add_special_tokens=False)
+
+    def find_subsequence(seq, subseq):
+        n, m = len(seq), len(subseq)
+        for i in range(n - m + 1):
+            if seq[i:i + m] == subseq:
+                return i
+        return -1
+
     def collate_fn(examples):
         texts = []
         audios = []
@@ -93,16 +124,12 @@ def create_collate_fn(processor):
         labels = batch["input_ids"].clone()
         labels[labels == processor.tokenizer.pad_token_id] = -100
 
-        # Mask everything before the assistant response
-        for i, text in enumerate(texts):
-            # Find where assistant response starts
-            response_marker = "<start_of_turn>model\n"
-            if response_marker in text:
-                # Tokenize up to response marker to find mask boundary
-                prefix = text[:text.rfind(response_marker) + len(response_marker)]
-                prefix_ids = processor.tokenizer(prefix, return_tensors="pt", add_special_tokens=False)["input_ids"][0]
-                prefix_len = len(prefix_ids)
-                labels[i, :prefix_len] = -100
+        for i in range(len(texts)):
+            input_ids_list = batch["input_ids"][i].tolist()
+            idx = find_subsequence(input_ids_list, marker_ids)
+            if idx >= 0:
+                mask_end = idx + len(marker_ids)
+                labels[i, :mask_end] = -100
 
         batch["labels"] = labels
         return batch
@@ -118,13 +145,17 @@ class WERCallback(TrainerCallback):
         self.wer_history = []
 
     def on_evaluate(self, args, state, control, **kwargs):
-        from jiwer import wer as compute_wer
+        try:
+            from jiwer import wer as compute_wer
+        except ImportError:
+            return
+
         self.model.eval()
         device = next(self.model.parameters()).device
         predictions, references = [], []
 
         for example in self.eval_subset:
-            audio = np.array(example["audio"]["array"], dtype=np.float32)
+            audio = np.array(example["audio_array"], dtype=np.float32)
             ref = example["transcript"]
             msgs = [
                 {"role": "user", "content": [
@@ -140,17 +171,26 @@ class WERCallback(TrainerCallback):
                 inputs = {k: v.to(device) for k, v in inputs.items()}
                 input_len = inputs["input_ids"].shape[-1]
                 with torch.inference_mode():
-                    out = self.model.generate(**inputs, max_new_tokens=128, do_sample=False)
-                text = self.processor.decode(out[0][input_len:], skip_special_tokens=True).strip()
+                    out = self.model.generate(
+                        **inputs, max_new_tokens=256, do_sample=False,
+                    )
+                text = self.processor.decode(
+                    out[0][input_len:], skip_special_tokens=True
+                ).strip()
                 predictions.append(normalize_arabic_for_eval(text))
                 references.append(normalize_arabic_for_eval(ref))
-            except Exception as e:
+            except Exception:
                 pass
 
         if predictions:
             step_wer = compute_wer(references, predictions) * 100
-            self.wer_history.append({"step": state.global_step, "wer": round(step_wer, 2)})
-            print(f"\n[WER @ step {state.global_step}] WER = {step_wer:.2f}% (on {len(predictions)} samples)")
+            self.wer_history.append({
+                "step": state.global_step, "wer": round(step_wer, 2)
+            })
+            print(
+                f"\n[WER @ step {state.global_step}] WER = {step_wer:.2f}% "
+                f"(on {len(predictions)} samples)"
+            )
 
         self.model.train()
 
@@ -173,11 +213,17 @@ def main(args):
     print(f"After filter — Train: {len(train_data)}  Eval: {len(eval_data)}")
 
     if args.max_train_samples:
-        train_data = train_data.select(range(min(args.max_train_samples, len(train_data))))
+        train_data = train_data.select(
+            range(min(args.max_train_samples, len(train_data)))
+        )
 
     print("Formatting data...")
-    train_data = train_data.map(format_for_training, remove_columns=train_data.column_names)
-    eval_data = eval_data.map(format_for_training, remove_columns=eval_data.column_names)
+    train_data = train_data.map(
+        format_for_training, remove_columns=train_data.column_names
+    )
+    eval_data = eval_data.map(
+        format_for_training, remove_columns=eval_data.column_names
+    )
 
     collate_fn = create_collate_fn(processor)
 
@@ -190,10 +236,11 @@ def main(args):
         lr_scheduler_type="cosine",
         warmup_ratio=0.1,
         num_train_epochs=args.num_epochs,
-        gradient_checkpointing=False,
-        bf16=torch.cuda.is_bf16_supported(),
+        gradient_checkpointing=True,
+        gradient_checkpointing_kwargs={"use_reentrant": False},
+        bf16=torch.cuda.is_bf16_supported() if torch.cuda.is_available() else False,
         fp16=False,
-        optim="adamw_torch",
+        optim="adamw_8bit",
         logging_steps=args.logging_steps,
         logging_first_step=True,
         save_strategy="steps",
@@ -223,7 +270,7 @@ def main(args):
     )
 
     print("\n" + "=" * 60)
-    print("Starting Phase 1 Training (pure HF, no Unsloth)")
+    print("Starting Phase 1 Training (pure HF + PEFT, no Unsloth)")
     print(f"  Train: {len(train_data)} samples")
     print(f"  LR: {args.learning_rate}  Epochs: {args.num_epochs}")
     print("=" * 60 + "\n")

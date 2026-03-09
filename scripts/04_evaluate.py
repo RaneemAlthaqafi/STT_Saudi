@@ -8,7 +8,7 @@ Two fixed test sets:
 
 Outputs a comparison table: Baseline → Phase 1 → Phase 2
 
-Uses shared normalization and metrics from scripts/utils/.
+Supports both pure HF+PEFT models and Unsloth models.
 
 Usage:
     # Evaluate Phase 1
@@ -49,17 +49,10 @@ from utils.metrics import (
     compute_snr_stratified_metrics,
     print_results,
 )
-# Bodycam simulation for noisy test set
-try:
-    from augment_data_v2 import apply_bodycam_effects, generate_synthetic_noise, add_noise_at_snr
-    HAS_BODYCAM = True
-except Exception:
-    HAS_BODYCAM = False
 
 
 # ──────────────────────────────────────────────────────────────
 # Bodycam noise simulation for fixed noisy test set
-# (inline fallback if import above fails)
 # ──────────────────────────────────────────────────────────────
 
 def _apply_bodycam_noise(audio_array: np.ndarray, sr: int = 16000, snr_db: float = 10.0) -> np.ndarray:
@@ -81,36 +74,85 @@ def _apply_bodycam_noise(audio_array: np.ndarray, sr: int = 16000, snr_db: float
     return noisy.astype(np.float32)
 
 
-def load_model_for_eval(model_dir, use_4bit=True):
-    """Load fine-tuned model for evaluation."""
-    from unsloth import FastModel
+# ──────────────────────────────────────────────────────────────
+# Model loading — supports both PEFT and Unsloth
+# ──────────────────────────────────────────────────────────────
 
-    print(f"Loading model from {model_dir}...")
+def load_model_for_eval(model_dir, base_model_name=None, use_4bit=True):
+    """
+    Load fine-tuned model for evaluation.
+    Tries pure HF+PEFT first, falls back to Unsloth.
+    """
+    model_dir = str(model_dir)
 
-    model, _ = FastModel.from_pretrained(
-        model_name=model_dir,
-        max_seq_length=1024,
-        load_in_4bit=use_4bit,
-        dtype=torch.bfloat16 if torch.cuda.is_available() else None,
-    )
-    model.eval()
+    # Check if this is a PEFT model (has adapter_config.json)
+    adapter_config_path = Path(model_dir) / "adapter_config.json"
+    is_peft = adapter_config_path.exists()
 
-    # Use Google's processor (Unsloth's saved version may have bugs)
-    from transformers import AutoProcessor
-    processor = AutoProcessor.from_pretrained("google/gemma-3n-E4B-it")
+    if is_peft:
+        print(f"Loading PEFT model from {model_dir}...")
+        from transformers import AutoProcessor, Gemma3nForConditionalGeneration, BitsAndBytesConfig
+        from peft import PeftModel
 
-    return model, processor
+        # Determine base model name
+        if base_model_name is None:
+            with open(adapter_config_path) as f:
+                adapter_cfg = json.load(f)
+            base_model_name = adapter_cfg.get(
+                "base_model_name_or_path",
+                "oddadmix/MasriSwitch-Gemma3n-Transcriber-v1"
+            )
+
+        bnb_config = None
+        if use_4bit:
+            bnb_config = BitsAndBytesConfig(
+                load_in_4bit=True,
+                bnb_4bit_quant_type="nf4",
+                bnb_4bit_compute_dtype=torch.bfloat16,
+                bnb_4bit_use_double_quant=True,
+            )
+
+        base_model = Gemma3nForConditionalGeneration.from_pretrained(
+            base_model_name,
+            quantization_config=bnb_config,
+            torch_dtype=torch.bfloat16,
+            device_map="auto",
+            attn_implementation="eager",
+        )
+
+        model = PeftModel.from_pretrained(base_model, model_dir)
+        model.eval()
+
+        # Use the processor saved with the model, fall back to Google's
+        try:
+            processor = AutoProcessor.from_pretrained(model_dir)
+        except Exception:
+            processor = AutoProcessor.from_pretrained("google/gemma-3n-E4B-it")
+
+        return model, processor
+
+    else:
+        # Fallback: try Unsloth
+        print(f"Loading Unsloth model from {model_dir}...")
+        from unsloth import FastModel
+        from transformers import AutoProcessor
+
+        model, _ = FastModel.from_pretrained(
+            model_name=model_dir,
+            max_seq_length=1024,
+            load_in_4bit=use_4bit,
+            dtype=torch.bfloat16 if torch.cuda.is_available() else None,
+        )
+        model.eval()
+
+        # Use Google's processor (Unsloth's saved version may have bugs)
+        processor = AutoProcessor.from_pretrained("google/gemma-3n-E4B-it")
+        return model, processor
 
 
 def transcribe_single(model, processor, audio_array, sr=16000, max_new_tokens=256):
     """Transcribe a single audio sample."""
     messages = [
-        {
-            "role": "system",
-            "content": [
-                {"type": "text", "text": "You are an assistant that transcribes speech accurately."}
-            ]
-        },
         {
             "role": "user",
             "content": [
@@ -163,7 +205,6 @@ def print_comparison_table(results_dir: str):
     rows = {}
 
     for phase in phase_order:
-        # Look for results file named by phase
         candidates = list(results_dir.glob(f"*{phase}*eval_results.json"))
         if not candidates:
             candidates = list(results_dir.glob(f"{phase}/eval_results.json"))
@@ -189,20 +230,19 @@ def print_comparison_table(results_dir: str):
         r = rows[phase]
         wer = r.get("wer", 0) * 100
         cer = r.get("cer", 0) * 100
-        sub = r.get("substitutions", 0) / max(r.get("total_words", 1), 1) * 100
-        del_ = r.get("deletions", 0) / max(r.get("total_words", 1), 1) * 100
-        ins = r.get("insertions", 0) / max(r.get("total_words", 1), 1) * 100
+        sub = r.get("word_S", 0) / max(r.get("word_N", 1), 1) * 100
+        del_ = r.get("word_D", 0) / max(r.get("word_N", 1), 1) * 100
+        ins = r.get("word_I", 0) / max(r.get("word_N", 1), 1) * 100
         print(f"{phase.capitalize():<12} {wer:>7.1f}% {cer:>7.1f}% {sub:>7.1f}% {del_:>7.1f}% {ins:>7.1f}%")
 
     print("=" * 60)
 
-    # Improvement vs baseline
     if "baseline" in rows and "phase2" in rows:
         b_wer = rows["baseline"].get("wer", 0) * 100
         p2_wer = rows["phase2"].get("wer", 0) * 100
         rel_improvement = (b_wer - p2_wer) / b_wer * 100 if b_wer > 0 else 0
         print(f"\nRelative WER improvement (Baseline → Phase 2): {rel_improvement:.1f}%")
-        print(f"Target: <10% WER  |  Current Phase 2: {p2_wer:.1f}%")
+        print(f"Target: <20% WER  |  Current Phase 2: {p2_wer:.1f}%")
     print()
 
 
@@ -215,10 +255,12 @@ def main(args):
     output_dir = Path(args.output_dir) if args.output_dir else Path(args.model_dir).parent / args.phase
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    # ── 1. Load model ─────────────────────────────────────────
-    model, processor = load_model_for_eval(args.model_dir)
+    # 1. Load model
+    model, processor = load_model_for_eval(
+        args.model_dir, base_model_name=args.base_model_name
+    )
 
-    # ── 2. Load eval data — TWO FIXED TEST SETS ───────────────
+    # 2. Load eval data — TWO FIXED TEST SETS
     print(f"\nLoading eval data from {args.data_dir}...")
     eval_data = load_from_disk(str(Path(args.data_dir) / "eval"))
     print(f"Total eval samples: {len(eval_data)}")
@@ -227,8 +269,7 @@ def main(args):
         eval_data = eval_data.select(range(args.max_samples))
         print(f"Evaluating on {len(eval_data)} samples")
 
-    # Fixed noisy test set: same samples but with bodycam simulation
-    # Seed is fixed so the noisy set is identical across all phase evaluations
+    # Fixed noisy test set (same seed every time for fair comparison)
     print(f"\nCreating fixed noisy test set (bodycam simulation, SNR 10dB, seed=42)...")
     rng_state = np.random.get_state()
     np.random.seed(42)
@@ -241,13 +282,13 @@ def main(args):
     np.random.set_state(rng_state)
     print(f"Noisy test set ready: {len(noisy_eval_audio)} samples")
 
-    # ── 3. Warmup (1 sample, not counted) ─────────────────────
+    # 3. Warmup (1 sample, not counted)
     print("\nWarmup inference...")
     warmup_audio = np.array(eval_data[0]["audio"]["array"], dtype=np.float32)
     transcribe_single(model, processor, warmup_audio)
 
-    # ── 4. Run evaluation ─────────────────────────────────────
-    print("\nRunning evaluation...")
+    # 4. Run evaluation on CLEAN test set
+    print("\nRunning evaluation (clean)...")
     predictions = []
     references = []
     rtf_tracker = RTFTracker()
@@ -267,22 +308,17 @@ def main(args):
             prediction = ""
             inference_time = 0.0
 
-        # Normalize for evaluation (OALL standard)
         pred_norm = normalize_arabic_for_eval(prediction)
         ref_norm = normalize_arabic_for_eval(reference)
 
         predictions.append(pred_norm)
         references.append(ref_norm)
-
-        # Track RTF
         rtf_tracker.record(duration_sec, inference_time)
 
-        # Estimate SNR if needed
         if args.snr_stratified:
             snr_db = estimate_snr(audio_array, sr)
             snr_values.append(snr_db)
 
-        # Per-sample metrics
         sample_metrics = compute_per_sample_metrics(ref_norm, pred_norm)
 
         results_detail.append({
@@ -298,7 +334,6 @@ def main(args):
             "snr_db": round(snr_values[-1], 1) if snr_values else None,
         })
 
-        # Print periodic samples
         if i < 5 or (i + 1) % 50 == 0:
             print(f"\n--- Sample {i} ---")
             print(f"  REF: {reference}")
@@ -306,7 +341,7 @@ def main(args):
             if sample_metrics.get("wer") is not None:
                 print(f"  WER: {sample_metrics['wer']*100:.1f}%  CER: {sample_metrics['cer']*100:.1f}%")
 
-    # ── 5. Compute clean metrics ──────────────────────────────
+    # 5. Compute clean metrics
     overall_clean = compute_all_metrics(references, predictions)
     rtf = rtf_tracker.summary()
     snr_results = None
@@ -318,7 +353,7 @@ def main(args):
     print("=" * 50)
     print_results(overall_clean, rtf, snr_results)
 
-    # ── 6. Evaluate on NOISY test set ────────────────────────
+    # 6. Evaluate on NOISY test set
     print("\n" + "=" * 50)
     print("  NOISY TEST SET (bodycam simulation, SNR 10dB)")
     print("=" * 50)
@@ -347,14 +382,13 @@ def main(args):
     rtf_noisy = rtf_tracker_noisy.summary()
     print_results(overall_noisy, rtf_noisy, None)
 
-    # Noisy WER improvement vs clean
     clean_wer = overall_clean.get("wer", 0) * 100
     noisy_wer = overall_noisy.get("wer", 0) * 100
     print(f"\n  Clean WER: {clean_wer:.2f}%")
     print(f"  Noisy WER: {noisy_wer:.2f}%")
     print(f"  WER degradation under noise: +{noisy_wer - clean_wer:.2f}%")
 
-    # ── 7. Save results ───────────────────────────────────────
+    # 7. Save results
     results_summary = {
         "model_dir": args.model_dir,
         "data_dir": args.data_dir,
@@ -387,6 +421,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Evaluate Saudi STT model")
     parser.add_argument("--model_dir", type=str, default=None,
                         help="Path to fine-tuned model checkpoint")
+    parser.add_argument("--base_model_name", type=str, default=None,
+                        help="Base model name (auto-detected from adapter_config.json if not set)")
     parser.add_argument("--data_dir", type=str, default="./data/saudi_clean",
                         help="Path to dataset directory with eval split")
     parser.add_argument("--output_dir", type=str, default="./eval_results",

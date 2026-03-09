@@ -1,58 +1,58 @@
 <mxfile host="65bd71144e">
     <diagram id="stt-pipeline" name="Pipeline Overview">
-        <mxGraphModel dx="935" dy="454" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="1700" math="0" shadow="0">
+        <mxGraphModel dx="765" dy="768" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="1700" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
                 <mxCell id="title" value="Saudi Arabic STT Pipeline" style="text;html=1;align=center;verticalAlign=middle;fontSize=24;fontStyle=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
                     <mxGeometry x="250" y="30" width="600" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="subtitle" value="Benchmark → Prepare → Train → Evaluate → Deploy" style="text;html=1;align=center;verticalAlign=middle;fontSize=13;fontStyle=2;strokeColor=none;fillColor=none;fontColor=#666666;" vertex="1" parent="1">
+                <mxCell id="subtitle" value="Benchmark → Prepare → Train → Evaluate → Deploy" style="text;html=1;align=center;verticalAlign=middle;fontSize=13;fontStyle=2;strokeColor=none;fillColor=none;fontColor=#666666;" parent="1" vertex="1">
                     <mxGeometry x="300" y="65" width="500" height="25" as="geometry"/>
                 </mxCell>
-                <mxCell id="sada" value="&lt;b&gt;SADA Dataset&lt;/b&gt;&lt;br&gt;667h Saudi Arabic" style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;size=12;boundedLbl=1;" vertex="1" parent="1">
+                <mxCell id="sada" value="&lt;b&gt;SADA Dataset&lt;/b&gt;&lt;br&gt;667h Saudi Arabic" style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;size=12;boundedLbl=1;" parent="1" vertex="1">
                     <mxGeometry x="60" y="160" width="150" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="anad" value="&lt;b&gt;ANAD Dataset&lt;/b&gt;&lt;br&gt;Arabic angry/offensive" style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;size=12;boundedLbl=1;" vertex="1" parent="1">
-                    <mxGeometry x="60" y="260" width="150" height="70" as="geometry"/>
+                <mxCell id="anad" value="&lt;b&gt;ANAD Dataset&lt;/b&gt;&lt;br&gt;Arabic angry/offensive" style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;size=12;boundedLbl=1;" parent="1" vertex="1">
+                    <mxGeometry x="150" y="1070" width="150" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="musan" value="&lt;b&gt;MUSAN Noise&lt;/b&gt;&lt;br&gt;109h noise/music" style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;size=12;boundedLbl=1;" vertex="1" parent="1">
+                <mxCell id="musan" value="&lt;b&gt;MUSAN Noise&lt;/b&gt;&lt;br&gt;109h noise/music" style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;size=12;boundedLbl=1;" parent="1" vertex="1">
                     <mxGeometry x="60" y="520" width="150" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="s0" value="&lt;b&gt;0. Benchmark 12 Models&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;shadow=1;arcSize=25;" vertex="1" parent="1">
+                <mxCell id="s0" value="&lt;b&gt;0. Benchmark 12 Models&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;shadow=1;arcSize=25;" parent="1" vertex="1">
                     <mxGeometry x="350" y="120" width="400" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="s0w" value="Find the best starting model" style="text;html=1;align=left;verticalAlign=middle;fontSize=11;fontStyle=2;fontColor=#997a00;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                <mxCell id="s0w" value="Find the best starting model" style="text;html=1;align=left;verticalAlign=middle;fontSize=11;fontStyle=2;fontColor=#997a00;strokeColor=none;fillColor=none;" parent="1" vertex="1">
                     <mxGeometry x="760" y="130" width="200" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="a01" value="Best model selected" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=2;strokeColor=#4D4D4D;fontSize=10;fontColor=#4D4D4D;" edge="1" parent="1" source="s0" target="s1">
+                <mxCell id="a01" value="Best model selected" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=2;strokeColor=#4D4D4D;fontSize=10;fontColor=#4D4D4D;" parent="1" source="s0" target="s1" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="s1" value="&lt;b&gt;1. Prepare Saudi Data&lt;/b&gt;&lt;br&gt;SADA (dialects) + ANAD (angry/offensive)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;shadow=1;arcSize=25;" vertex="1" parent="1">
+                <mxCell id="s1" value="&lt;b&gt;1. Prepare Saudi Data&lt;/b&gt;&lt;br&gt;SADA (dialects) + ANAD (angry/offensive)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;shadow=1;arcSize=25;" parent="1" vertex="1">
                     <mxGeometry x="350" y="230" width="400" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="s1w" value="Saudi speech + offensive words" style="text;html=1;align=left;verticalAlign=middle;fontSize=11;fontStyle=2;fontColor=#997a00;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                <mxCell id="s1w" value="Saudi speech + offensive words" style="text;html=1;align=left;verticalAlign=middle;fontSize=11;fontStyle=2;fontColor=#997a00;strokeColor=none;fillColor=none;" parent="1" vertex="1">
                     <mxGeometry x="760" y="240" width="220" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="a_sada" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=1.5;strokeColor=#82b366;dashed=1;" edge="1" parent="1" source="sada" target="s1">
+                <mxCell id="a_sada" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=1.5;strokeColor=#82b366;dashed=1;" parent="1" source="sada" target="s1" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="a_anad" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=1.5;strokeColor=#82b366;dashed=1;" edge="1" parent="1" source="anad" target="s1">
+                <mxCell id="a_anad" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=1.5;strokeColor=#82b366;dashed=1;" parent="1" source="anad" target="s1" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="a12" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=2;strokeColor=#4D4D4D;" edge="1" parent="1" source="s1" target="s2">
+                <mxCell id="a12" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=2;strokeColor=#4D4D4D;" parent="1" source="s1" target="s2" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="s2" value="&lt;b&gt;2. Augment with Noise&lt;/b&gt;&lt;br&gt;SNR 5-15 dB + speed perturbation" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;shadow=1;arcSize=25;" vertex="1" parent="1">
+                <mxCell id="s2" value="&lt;b&gt;2. Augment with Noise&lt;/b&gt;&lt;br&gt;SNR 5-15 dB + speed perturbation" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;shadow=1;arcSize=25;" parent="1" vertex="1">
                     <mxGeometry x="350" y="340" width="400" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="s2w" value="Simulate real-world noise" style="text;html=1;align=left;verticalAlign=middle;fontSize=11;fontStyle=2;fontColor=#997a00;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                <mxCell id="s2w" value="Simulate real-world noise" style="text;html=1;align=left;verticalAlign=middle;fontSize=11;fontStyle=2;fontColor=#997a00;strokeColor=none;fillColor=none;" parent="1" vertex="1">
                     <mxGeometry x="760" y="350" width="200" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="a_musan" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=1.5;strokeColor=#82b366;dashed=1;" edge="1" parent="1" source="musan" target="s2">
+                <mxCell id="a_musan" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=1.5;strokeColor=#82b366;dashed=1;" parent="1" source="musan" target="s2" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="a_clean" value="Clean data" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=2;strokeColor=#9673a6;fontSize=10;fontColor=#9673a6;" edge="1" parent="1" source="s1" target="s3">
+                <mxCell id="a_clean" value="Clean data" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=2;strokeColor=#9673a6;fontSize=10;fontColor=#9673a6;" parent="1" source="s1" target="s3" edge="1">
                     <mxGeometry x="-0.65" relative="1" as="geometry">
                         <Array as="points">
                             <mxPoint x="290" y="255"/>
@@ -61,7 +61,7 @@
                         <mxPoint as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="a_noisy" value="Noisy data" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=2;strokeColor=#9673a6;fontSize=10;fontColor=#9673a6;dashed=1;" edge="1" parent="1" source="s2" target="s5">
+                <mxCell id="a_noisy" value="Noisy data" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=2;strokeColor=#9673a6;fontSize=10;fontColor=#9673a6;dashed=1;" parent="1" source="s2" target="s5" edge="1">
                     <mxGeometry x="-0.75" relative="1" as="geometry">
                         <Array as="points">
                             <mxPoint x="260" y="365"/>
@@ -70,28 +70,28 @@
                         <mxPoint as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="phase1_bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E8FF;strokeColor=#9673a6;strokeWidth=2;dashed=1;opacity=40;" vertex="1" parent="1">
+                <mxCell id="phase1_bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E8FF;strokeColor=#9673a6;strokeWidth=2;dashed=1;opacity=40;" parent="1" vertex="1">
                     <mxGeometry x="330" y="430" width="440" height="170" as="geometry"/>
                 </mxCell>
-                <mxCell id="phase1_label" value="Phase 1: Dialect Adaptation" style="text;html=1;align=left;verticalAlign=middle;fontSize=12;fontStyle=3;fontColor=#7c4dab;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                <mxCell id="phase1_label" value="Phase 1: Dialect Adaptation" style="text;html=1;align=left;verticalAlign=middle;fontSize=12;fontStyle=3;fontColor=#7c4dab;strokeColor=none;fillColor=none;" parent="1" vertex="1">
                     <mxGeometry x="340" y="432" width="220" height="25" as="geometry"/>
                 </mxCell>
-                <mxCell id="s3" value="&lt;b&gt;3. Train on Clean Saudi Data&lt;/b&gt;&lt;br&gt;LR 2e-5 | 2 epochs | LoRA r=16" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=14;shadow=1;arcSize=25;" vertex="1" parent="1">
+                <mxCell id="s3" value="&lt;b&gt;3. Train on Clean Saudi Data&lt;/b&gt;&lt;br&gt;LR 2e-5 | 2 epochs | LoRA r=16" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=14;shadow=1;arcSize=25;" parent="1" vertex="1">
                     <mxGeometry x="350" y="460" width="400" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="s3w" value="Learn Saudi dialect first (stable)" style="text;html=1;align=left;verticalAlign=middle;fontSize=11;fontStyle=2;fontColor=#997a00;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                <mxCell id="s3w" value="Learn Saudi dialect first (stable)" style="text;html=1;align=left;verticalAlign=middle;fontSize=11;fontStyle=2;fontColor=#997a00;strokeColor=none;fillColor=none;" parent="1" vertex="1">
                     <mxGeometry x="770" y="460" width="230" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="a34" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=2;strokeColor=#4D4D4D;" edge="1" parent="1" source="s3" target="s4">
+                <mxCell id="a34" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=2;strokeColor=#4D4D4D;" parent="1" source="s3" target="s4" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="s4" value="&lt;b&gt;4. Evaluate Phase 1&lt;/b&gt;&lt;br&gt;WER / CER + SNR breakdown" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;shadow=1;arcSize=25;" vertex="1" parent="1">
+                <mxCell id="s4" value="&lt;b&gt;4. Evaluate Phase 1&lt;/b&gt;&lt;br&gt;WER / CER + SNR breakdown" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;shadow=1;arcSize=25;" parent="1" vertex="1">
                     <mxGeometry x="350" y="560" width="400" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="s4w" value="Verify dialect improved before noise" style="text;html=1;align=left;verticalAlign=middle;fontSize=11;fontStyle=2;fontColor=#997a00;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                <mxCell id="s4w" value="Verify dialect improved before noise" style="text;html=1;align=left;verticalAlign=middle;fontSize=11;fontStyle=2;fontColor=#997a00;strokeColor=none;fillColor=none;" parent="1" vertex="1">
                     <mxGeometry x="770" y="580" width="250" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="a_loop" value="Adjust if needed" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=1.5;strokeColor=#b85450;fontSize=9;fontColor=#b85450;dashed=1;dashPattern=6 3;" edge="1" parent="1" source="s4" target="s3">
+                <mxCell id="a_loop" value="Adjust if needed" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=1.5;strokeColor=#b85450;fontSize=9;fontColor=#b85450;dashed=1;dashPattern=6 3;" parent="1" source="s4" target="s3" edge="1">
                     <mxGeometry x="0.3" y="12" relative="1" as="geometry">
                         <Array as="points">
                             <mxPoint x="800" y="585"/>
@@ -100,117 +100,117 @@
                         <mxPoint as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="dec" value="WER&lt;br&gt;improved?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;shadow=1;" vertex="1" parent="1">
+                <mxCell id="dec" value="WER&lt;br&gt;improved?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;shadow=1;" parent="1" vertex="1">
                     <mxGeometry x="500" y="660" width="100" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="a4d" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=2;strokeColor=#4D4D4D;" edge="1" parent="1" source="s4" target="dec">
+                <mxCell id="a4d" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=2;strokeColor=#4D4D4D;" parent="1" source="s4" target="dec" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="a_yes" value="Yes" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=2;strokeColor=#82b366;fontSize=11;fontStyle=1;fontColor=#82b366;" edge="1" parent="1" source="dec" target="s5">
+                <mxCell id="a_yes" value="Yes" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=2;strokeColor=#82b366;fontSize=11;fontStyle=1;fontColor=#82b366;" parent="1" source="dec" target="s5" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="phase2_bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E8FF;strokeColor=#9673a6;strokeWidth=2;dashed=1;opacity=40;" vertex="1" parent="1">
+                <mxCell id="phase2_bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E8FF;strokeColor=#9673a6;strokeWidth=2;dashed=1;opacity=40;" parent="1" vertex="1">
                     <mxGeometry x="330" y="760" width="440" height="170" as="geometry"/>
                 </mxCell>
-                <mxCell id="phase2_label" value="Phase 2: Noise Robustness" style="text;html=1;align=left;verticalAlign=middle;fontSize=12;fontStyle=3;fontColor=#7c4dab;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                <mxCell id="phase2_label" value="Phase 2: Noise Robustness" style="text;html=1;align=left;verticalAlign=middle;fontSize=12;fontStyle=3;fontColor=#7c4dab;strokeColor=none;fillColor=none;" parent="1" vertex="1">
                     <mxGeometry x="340" y="762" width="220" height="25" as="geometry"/>
                 </mxCell>
-                <mxCell id="s5" value="&lt;b&gt;5. Train on Noisy + Clean Data&lt;/b&gt;&lt;br&gt;LR 1e-5 | 1 epoch | 50:50 mix" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=14;shadow=1;arcSize=25;" vertex="1" parent="1">
+                <mxCell id="s5" value="&lt;b&gt;5. Train on Noisy + Clean Data&lt;/b&gt;&lt;br&gt;LR 1e-5 | 1 epoch | 50:50 mix" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=14;shadow=1;arcSize=25;" parent="1" vertex="1">
                     <mxGeometry x="350" y="790" width="400" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="s5w" value="Add noise tolerance carefully" style="text;html=1;align=left;verticalAlign=middle;fontSize=11;fontStyle=2;fontColor=#997a00;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                <mxCell id="s5w" value="Add noise tolerance carefully" style="text;html=1;align=left;verticalAlign=middle;fontSize=11;fontStyle=2;fontColor=#997a00;strokeColor=none;fillColor=none;" parent="1" vertex="1">
                     <mxGeometry x="770" y="800" width="230" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="a56" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=2;strokeColor=#4D4D4D;" edge="1" parent="1" source="s5" target="s6">
+                <mxCell id="a56" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=2;strokeColor=#4D4D4D;" parent="1" source="s5" target="s6" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="s6" value="&lt;b&gt;6. Final Evaluation&lt;/b&gt;&lt;br&gt;Compare vs all Step 0 baselines" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;shadow=1;arcSize=25;" vertex="1" parent="1">
+                <mxCell id="s6" value="&lt;b&gt;6. Final Evaluation&lt;/b&gt;&lt;br&gt;Compare vs all Step 0 baselines" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;shadow=1;arcSize=25;" parent="1" vertex="1">
                     <mxGeometry x="350" y="890" width="400" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="s6w" value="Confirm we beat all baselines" style="text;html=1;align=left;verticalAlign=middle;fontSize=11;fontStyle=2;fontColor=#997a00;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                <mxCell id="s6w" value="Confirm we beat all baselines" style="text;html=1;align=left;verticalAlign=middle;fontSize=11;fontStyle=2;fontColor=#997a00;strokeColor=none;fillColor=none;" parent="1" vertex="1">
                     <mxGeometry x="770" y="900" width="230" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="a67" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=2;strokeColor=#4D4D4D;" edge="1" parent="1" source="s6" target="s7">
+                <mxCell id="a67" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=2;strokeColor=#4D4D4D;" parent="1" source="s6" target="s7" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="s7" value="&lt;b&gt;7. Merge LoRA &amp;amp; Export&lt;/b&gt;&lt;br&gt;Standalone production model" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#76b5c5;strokeColor=#23445d;fontSize=14;fontColor=#ffffff;shadow=1;arcSize=25;" vertex="1" parent="1">
+                <mxCell id="s7" value="&lt;b&gt;7. Merge LoRA &amp;amp; Export&lt;/b&gt;&lt;br&gt;Standalone production model" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#76b5c5;strokeColor=#23445d;fontSize=14;fontColor=#ffffff;shadow=1;arcSize=25;" parent="1" vertex="1">
                     <mxGeometry x="350" y="1000" width="400" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="s7w" value="Fast inference, no adapter overhead" style="text;html=1;align=left;verticalAlign=middle;fontSize=11;fontStyle=2;fontColor=#997a00;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                <mxCell id="s7w" value="Fast inference, no adapter overhead" style="text;html=1;align=left;verticalAlign=middle;fontSize=11;fontStyle=2;fontColor=#997a00;strokeColor=none;fillColor=none;" parent="1" vertex="1">
                     <mxGeometry x="760" y="1010" width="250" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="a7d" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=2;strokeColor=#4D4D4D;" edge="1" parent="1" source="s7" target="deploy">
+                <mxCell id="a7d" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=2;strokeColor=#4D4D4D;" parent="1" source="s7" target="deploy" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="deploy" value="Saudi Arabic STT&lt;br&gt;Production Ready" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fillColor=#1a1a2e;strokeColor=#16213e;fontSize=15;fontColor=#ffffff;shadow=1;size=0.5;" vertex="1" parent="1">
+                <mxCell id="deploy" value="Saudi Arabic STT&lt;br&gt;Production Ready" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fillColor=#1a1a2e;strokeColor=#16213e;fontSize=15;fontColor=#ffffff;shadow=1;size=0.5;" parent="1" vertex="1">
                     <mxGeometry x="430" y="1100" width="240" height="100" as="geometry"/>
                 </mxCell>
-                <mxCell id="targets" value="&lt;b&gt;Target Metrics&lt;/b&gt;&lt;br&gt;Clean: WER &amp;lt; 20%&lt;br&gt;Noisy: WER &amp;lt; 35%" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;shadow=1;" vertex="1" parent="1">
+                <mxCell id="targets" value="&lt;b&gt;Target Metrics&lt;/b&gt;&lt;br&gt;Clean: WER &amp;lt; 20%&lt;br&gt;Noisy: WER &amp;lt; 35%" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;shadow=1;" parent="1" vertex="1">
                     <mxGeometry x="720" y="1100" width="170" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="a_target" style="edgeStyle=none;html=1;dashed=1;strokeColor=#d6b656;" edge="1" parent="1" source="targets" target="deploy">
+                <mxCell id="a_target" style="edgeStyle=none;html=1;dashed=1;strokeColor=#d6b656;" parent="1" source="targets" target="deploy" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="tech_title" value="Key Techniques Used" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                <mxCell id="tech_title" value="Key Techniques Used" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
                     <mxGeometry x="300" y="1210" width="500" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="t1" value="&lt;b&gt;train_on_responses_only&lt;/b&gt;&lt;br&gt;Only learn transcription output" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#999999;fontSize=11;arcSize=30;" vertex="1" parent="1">
+                <mxCell id="t1" value="&lt;b&gt;train_on_responses_only&lt;/b&gt;&lt;br&gt;Only learn transcription output" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#999999;fontSize=11;arcSize=30;" parent="1" vertex="1">
                     <mxGeometry x="60" y="1250" width="210" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="t2" value="&lt;b&gt;QLoRA 4-bit&lt;/b&gt;&lt;br&gt;Fits on 16 GB VRAM" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#999999;fontSize=11;arcSize=30;" vertex="1" parent="1">
+                <mxCell id="t2" value="&lt;b&gt;QLoRA 4-bit&lt;/b&gt;&lt;br&gt;Fits on 16 GB VRAM" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#999999;fontSize=11;arcSize=30;" parent="1" vertex="1">
                     <mxGeometry x="290" y="1250" width="170" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="t3" value="&lt;b&gt;Audio LoRA Modules&lt;/b&gt;&lt;br&gt;post, linear_start, embed_audio" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#999999;fontSize=11;arcSize=30;" vertex="1" parent="1">
+                <mxCell id="t3" value="&lt;b&gt;Audio LoRA Modules&lt;/b&gt;&lt;br&gt;post, linear_start, embed_audio" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#999999;fontSize=11;arcSize=30;" parent="1" vertex="1">
                     <mxGeometry x="480" y="1250" width="230" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="t4" value="&lt;b&gt;Progressive Training&lt;/b&gt;&lt;br&gt;Clean → Noisy (more stable)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#999999;fontSize=11;arcSize=30;" vertex="1" parent="1">
+                <mxCell id="t4" value="&lt;b&gt;Progressive Training&lt;/b&gt;&lt;br&gt;Clean → Noisy (more stable)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#999999;fontSize=11;arcSize=30;" parent="1" vertex="1">
                     <mxGeometry x="730" y="1250" width="210" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="leg_bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#CCCCCC;strokeWidth=1;" vertex="1" parent="1">
+                <mxCell id="leg_bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#CCCCCC;strokeWidth=1;" parent="1" vertex="1">
                     <mxGeometry x="60" y="1340" width="880" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="l1c" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+                <mxCell id="l1c" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
                     <mxGeometry x="80" y="1350" width="20" height="15" as="geometry"/>
                 </mxCell>
-                <mxCell id="l1t" value="Benchmark" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                <mxCell id="l1t" value="Benchmark" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;strokeColor=none;fillColor=none;" parent="1" vertex="1">
                     <mxGeometry x="105" y="1345" width="70" height="25" as="geometry"/>
                 </mxCell>
-                <mxCell id="l2c" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+                <mxCell id="l2c" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
                     <mxGeometry x="190" y="1350" width="20" height="15" as="geometry"/>
                 </mxCell>
-                <mxCell id="l2t" value="Data Prep" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                <mxCell id="l2t" value="Data Prep" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;strokeColor=none;fillColor=none;" parent="1" vertex="1">
                     <mxGeometry x="215" y="1345" width="70" height="25" as="geometry"/>
                 </mxCell>
-                <mxCell id="l3c" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+                <mxCell id="l3c" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
                     <mxGeometry x="300" y="1350" width="20" height="15" as="geometry"/>
                 </mxCell>
-                <mxCell id="l3t" value="Training" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                <mxCell id="l3t" value="Training" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;strokeColor=none;fillColor=none;" parent="1" vertex="1">
                     <mxGeometry x="325" y="1345" width="60" height="25" as="geometry"/>
                 </mxCell>
-                <mxCell id="l4c" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+                <mxCell id="l4c" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
                     <mxGeometry x="400" y="1350" width="20" height="15" as="geometry"/>
                 </mxCell>
-                <mxCell id="l4t" value="Evaluation" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                <mxCell id="l4t" value="Evaluation" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;strokeColor=none;fillColor=none;" parent="1" vertex="1">
                     <mxGeometry x="425" y="1345" width="70" height="25" as="geometry"/>
                 </mxCell>
-                <mxCell id="l5c" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#76b5c5;strokeColor=#23445d;" vertex="1" parent="1">
+                <mxCell id="l5c" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#76b5c5;strokeColor=#23445d;" parent="1" vertex="1">
                     <mxGeometry x="510" y="1350" width="20" height="15" as="geometry"/>
                 </mxCell>
-                <mxCell id="l5t" value="Export" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                <mxCell id="l5t" value="Export" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;strokeColor=none;fillColor=none;" parent="1" vertex="1">
                     <mxGeometry x="535" y="1345" width="50" height="25" as="geometry"/>
                 </mxCell>
-                <mxCell id="l6t" value="&lt;i&gt;italic = why we do this step&lt;/i&gt;" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;fontColor=#997a00;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                <mxCell id="l6t" value="&lt;i&gt;italic = why we do this step&lt;/i&gt;" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;fontColor=#997a00;strokeColor=none;fillColor=none;" parent="1" vertex="1">
                     <mxGeometry x="620" y="1345" width="170" height="25" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>
     </diagram>
     <diagram id="why-gemma3n" name="Why MasriSwitch-Gemma3n">
-        <mxGraphModel dx="1285" dy="624" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="1400" math="0" shadow="0">
+        <mxGraphModel dx="710" dy="713" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="1400" math="0" shadow="0">
             <root>
                 <mxCell id="p2_0"/>
                 <mxCell id="p2_1" parent="p2_0"/>
-                <mxCell id="p2_title" value="Why MasriSwitch-Gemma3n?" style="text;html=1;align=center;verticalAlign=middle;fontSize=24;fontStyle=1;strokeColor=none;fillColor=none;" parent="p2_1" vertex="1">
+                <mxCell id="p2_title" value="Why SaudiSwitch-Gemma3n?" style="text;html=1;align=center;verticalAlign=middle;fontSize=24;fontStyle=1;strokeColor=none;fillColor=none;" parent="p2_1" vertex="1">
                     <mxGeometry x="250" y="20" width="600" height="40" as="geometry"/>
                 </mxCell>
                 <mxCell id="p2_sub" value="Why this model has the highest potential for Saudi Arabic STT" style="text;html=1;align=center;verticalAlign=middle;fontSize=13;fontStyle=2;strokeColor=none;fillColor=none;fontColor=#666666;" parent="p2_1" vertex="1">
@@ -347,6 +347,215 @@
                 </mxCell>
                 <mxCell id="p2_bottom_text" value="&lt;b style=&quot;font-size:13px&quot;&gt;Bottom Line:&lt;/b&gt; The only model combining &lt;b&gt;Arabic knowledge&lt;/b&gt; + &lt;b&gt;code-switching&lt;/b&gt; + &lt;b&gt;language understanding&lt;/b&gt; + &lt;b&gt;efficient fine-tuning&lt;/b&gt; in one open-source package." style="text;html=1;align=center;verticalAlign=middle;fontSize=12;strokeColor=none;fillColor=none;" parent="p2_1" vertex="1">
                     <mxGeometry x="220" y="965" width="650" height="60" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram id="model-architecture" name="Model Architecture">
+        <mxGraphModel dx="1146" dy="624" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="1800" math="0" shadow="0">
+            <root>
+                <mxCell id="a0"/>
+                <mxCell id="a1" parent="a0"/>
+                <mxCell id="a_title" value="Saudi STT — Model Architecture &amp; Training Flow" style="text;html=1;align=center;verticalAlign=middle;fontSize=24;fontStyle=1;strokeColor=none;fillColor=none;" parent="a1" vertex="1">
+                    <mxGeometry x="200" y="20" width="800" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_subtitle" value="Pure HuggingFace + PEFT (LoRA)&amp;nbsp;" style="text;html=1;align=center;verticalAlign=middle;fontSize=13;fontStyle=2;strokeColor=none;fillColor=none;fontColor=#666666;" parent="a1" vertex="1">
+                    <mxGeometry x="300" y="55" width="600" height="25" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_base_bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1a1a2e;strokeColor=#16213e;arcSize=6;shadow=1;" parent="a1" vertex="1">
+                    <mxGeometry x="100" y="100" width="1000" height="180" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_base_title" value="&lt;font color=&#39;#ffffff&#39; style=&#39;font-size:16px&#39;&gt;&lt;b&gt;Base Model: MasriSwitch-Gemma3n-Transcriber-v1&lt;/b&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;" parent="a1" vertex="1">
+                    <mxGeometry x="200" y="110" width="800" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_audio_enc" value="&lt;b&gt;Audio Encoder&lt;/b&gt;&lt;br&gt;&lt;font style=&#39;font-size:10px&#39;&gt;Gemma3n AudioEncoder&lt;br&gt;16kHz → Audio Embeddings&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4a6fa5;strokeColor=#2d4a7a;fontColor=#ffffff;fontSize=12;shadow=1;arcSize=15;" parent="a1" vertex="1">
+                    <mxGeometry x="130" y="150" width="200" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_vision" value="&lt;b&gt;Vision Tower&lt;/b&gt;&lt;br&gt;&lt;font style=&#39;font-size:10px&#39;&gt;TimmWrapper&lt;br&gt;(frozen)&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#555555;strokeColor=#333333;fontColor=#ffffff;fontSize=12;arcSize=15;" parent="a1" vertex="1">
+                    <mxGeometry x="360" y="150" width="140" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_lm" value="&lt;b&gt;Language Model&lt;/b&gt;&lt;br&gt;&lt;font style=&#39;font-size:10px&#39;&gt;Gemma3n TextModel&lt;br&gt;8B params | BF16&lt;br&gt;AltUp layers | 26 decoder blocks&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#6c3483;strokeColor=#4a235a;fontColor=#ffffff;fontSize=12;shadow=1;arcSize=15;" parent="a1" vertex="1">
+                    <mxGeometry x="530" y="150" width="250" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_lm_head" value="&lt;b&gt;LM Head&lt;/b&gt;&lt;br&gt;&lt;font style=&#39;font-size:10px&#39;&gt;→ Text Tokens&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e8449;strokeColor=#145a32;fontColor=#ffffff;fontSize=12;shadow=1;arcSize=15;" parent="a1" vertex="1">
+                    <mxGeometry x="810" y="150" width="130" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_arr1" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=2;strokeColor=#ffffff;" parent="a1" source="a_audio_enc" target="a_lm" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_arr1b" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=1;strokeColor=#888888;dashed=1;" parent="a1" source="a_vision" target="a_lm" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_arr2" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=2;strokeColor=#ffffff;" parent="a1" source="a_lm" target="a_lm_head" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_base_info" value="&lt;font color=&#39;#aaaaaa&#39; style=&#39;font-size:10px&#39;&gt;Pretrained: Egyptian Arabic + English code-switching | Apache 2.0&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;" parent="a1" vertex="1">
+                    <mxGeometry x="300" y="240" width="600" height="25" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_lora_bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef9e7;strokeColor=#d4ac0d;strokeWidth=2;dashed=1;arcSize=6;" parent="a1" vertex="1">
+                    <mxGeometry x="100" y="320" width="1000" height="200" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_lora_title" value="LoRA Adaptation Layer (PEFT)" style="text;html=1;align=left;verticalAlign=middle;fontSize=16;fontStyle=1;fontColor=#7d6608;strokeColor=none;fillColor=none;" parent="a1" vertex="1">
+                    <mxGeometry x="120" y="325" width="350" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_lora_info" value="r=16 | alpha=32 | dropout=0.0 | 42M trainable (0.54%)" style="text;html=1;align=right;verticalAlign=middle;fontSize=11;fontStyle=2;fontColor=#7d6608;strokeColor=none;fillColor=none;" parent="a1" vertex="1">
+                    <mxGeometry x="650" y="325" width="430" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_lora_attn" value="&lt;b&gt;Attention LoRA&lt;/b&gt;&lt;br&gt;&lt;font style=&#39;font-size:10px&#39;&gt;q_proj, k_proj&lt;br&gt;v_proj, o_proj&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;shadow=1;arcSize=12;" parent="a1" vertex="1">
+                    <mxGeometry x="140" y="370" width="180" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_lora_ffn" value="&lt;b&gt;FFN LoRA&lt;/b&gt;&lt;br&gt;&lt;font style=&#39;font-size:10px&#39;&gt;gate_proj, up_proj&lt;br&gt;down_proj&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;shadow=1;arcSize=12;" parent="a1" vertex="1">
+                    <mxGeometry x="360" y="370" width="180" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_lora_frozen" value="&lt;b&gt;Frozen Layers&lt;/b&gt;&lt;br&gt;&lt;font style=&#39;font-size:10px&#39;&gt;Audio Encoder&lt;br&gt;Vision Tower&lt;br&gt;Embed Tokens, LM Head&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#999999;fontSize=12;arcSize=12;" parent="a1" vertex="1">
+                    <mxGeometry x="580" y="370" width="200" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_lora_note" value="&lt;b&gt;Why no modules_to_save?&lt;/b&gt;&lt;br&gt;&lt;font style=&#39;font-size:10px&#39;&gt;embed_tokens and lm_head are quantized&lt;br&gt;(int8/int4) — cannot require_grad.&lt;br&gt;LoRA on attention+FFN is sufficient.&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fdedec;strokeColor=#e74c3c;fontSize=11;arcSize=12;" parent="a1" vertex="1">
+                    <mxGeometry x="820" y="365" width="250" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_lora_eq" value="&lt;font style=&#39;font-size:11px&#39;&gt;&lt;b&gt;LoRA Math:&lt;/b&gt; W&#39; = W + α/r × BA  where B∈ℝ&lt;sup&gt;d×16&lt;/sup&gt;, A∈ℝ&lt;sup&gt;16×d&lt;/sup&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontColor=#7d6608;" parent="a1" vertex="1">
+                    <mxGeometry x="200" y="460" width="600" height="25" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_no_unsloth" value="No Unsloth / No torch.compile / No dynamo — pure HuggingFace stack" style="text;html=1;align=center;verticalAlign=middle;fontSize=11;fontStyle=3;fontColor=#c0392b;strokeColor=none;fillColor=none;" parent="a1" vertex="1">
+                    <mxGeometry x="250" y="495" width="600" height="25" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_train_title" value="Training Configuration" style="text;html=1;align=center;verticalAlign=middle;fontSize=18;fontStyle=1;strokeColor=none;fillColor=none;" parent="a1" vertex="1">
+                    <mxGeometry x="300" y="540" width="400" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_p1_bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f8f5;strokeColor=#1abc9c;strokeWidth=2;arcSize=6;shadow=1;" parent="a1" vertex="1">
+                    <mxGeometry x="100" y="590" width="480" height="280" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_p1_label" value="Phase 1: Saudi Dialect Adaptation" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;fontColor=#0e6655;strokeColor=none;fillColor=none;" parent="a1" vertex="1">
+                    <mxGeometry x="140" y="595" width="400" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_p1_data" value="&lt;b&gt;Data&lt;/b&gt;&lt;br&gt;SADA22 Clean Saudi&lt;br&gt;~5000 samples (3-30s)&lt;br&gt;Khaliji 60% + Hijazi 40%" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;arcSize=12;" parent="a1" vertex="1">
+                    <mxGeometry x="120" y="635" width="200" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_p1_cfg" value="&lt;b&gt;Config&lt;/b&gt;&lt;br&gt;LR: 2e-5 (cosine)&lt;br&gt;Epochs: 1-2&lt;br&gt;Batch: 1 × grad_accum 8&lt;br&gt;Warmup: 10%&lt;br&gt;BF16 mixed precision" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;arcSize=12;" parent="a1" vertex="1">
+                    <mxGeometry x="350" y="635" width="210" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_p1_goal" value="&lt;b&gt;Goal&lt;/b&gt;&lt;br&gt;Learn Saudi dialect patterns&lt;br&gt;before adding noise complexity" style="text;html=1;align=center;verticalAlign=middle;fontSize=11;fontStyle=0;fontColor=#0e6655;strokeColor=none;fillColor=none;" parent="a1" vertex="1">
+                    <mxGeometry x="120" y="730" width="440" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_p1_features" value="&lt;b&gt;Training Features&lt;/b&gt;&lt;br&gt;• Label masking (only train on assistant response)&lt;br&gt;• WER callback every eval step&lt;br&gt;• Early stopping (patience=3)&lt;br&gt;• Best model checkpoint saved" style="text;html=1;align=left;verticalAlign=top;fontSize=10;strokeColor=none;fillColor=none;fontColor=#333333;spacingLeft=5;" parent="a1" vertex="1">
+                    <mxGeometry x="120" y="775" width="440" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_p2_bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fdf2e9;strokeColor=#e67e22;strokeWidth=2;arcSize=6;shadow=1;" parent="a1" vertex="1">
+                    <mxGeometry x="620" y="590" width="480" height="280" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_p2_label" value="Phase 2: Noise Robustness" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;fontColor=#935116;strokeColor=none;fillColor=none;" parent="a1" vertex="1">
+                    <mxGeometry x="660" y="595" width="400" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_p2_data" value="&lt;b&gt;Data&lt;/b&gt;&lt;br&gt;60% Clean + 40% Noisy&lt;br&gt;Noise: street, crowd, wind&lt;br&gt;SNR: 5/10/15 dB" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fdebd0;strokeColor=#e67e22;fontSize=11;arcSize=12;" parent="a1" vertex="1">
+                    <mxGeometry x="640" y="635" width="200" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_p2_cfg" value="&lt;b&gt;Config&lt;/b&gt;&lt;br&gt;LR: 1e-5 (lower)&lt;br&gt;Epochs: 1&lt;br&gt;Resume from Phase 1 LoRA&lt;br&gt;Same batch config" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;arcSize=12;" parent="a1" vertex="1">
+                    <mxGeometry x="870" y="635" width="210" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_p2_goal" value="&lt;b&gt;Goal&lt;/b&gt;&lt;br&gt;Add noise tolerance without&lt;br&gt;forgetting dialect knowledge" style="text;html=1;align=center;verticalAlign=middle;fontSize=11;fontStyle=0;fontColor=#935116;strokeColor=none;fillColor=none;" parent="a1" vertex="1">
+                    <mxGeometry x="640" y="730" width="440" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_p2_noise" value="&lt;b&gt;Noise Augmentation&lt;/b&gt;&lt;br&gt;• Bodycam effects (AGC, clipping, reverb)&lt;br&gt;• 5 noise types × 3 SNR levels&lt;br&gt;• 8/10/12-bit quantization simulation&lt;br&gt;• Research: noisy training &gt; denoising first" style="text;html=1;align=left;verticalAlign=top;fontSize=10;strokeColor=none;fillColor=none;fontColor=#333333;spacingLeft=5;" parent="a1" vertex="1">
+                    <mxGeometry x="640" y="775" width="440" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_p12_arr" value="LoRA weights" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=3;strokeColor=#2e7d32;fontSize=11;fontStyle=1;fontColor=#2e7d32;" parent="a1" source="a_p1_bg" target="a_p2_bg" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_flow_title" value="Data Processing Flow" style="text;html=1;align=center;verticalAlign=middle;fontSize=18;fontStyle=1;strokeColor=none;fillColor=none;" parent="a1" vertex="1">
+                    <mxGeometry x="300" y="910" width="400" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_raw" value="&lt;b&gt;SADA22&lt;/b&gt;&lt;br&gt;667h Streaming" style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;size=10;boundedLbl=1;shadow=1;" parent="a1" vertex="1">
+                    <mxGeometry x="100" y="960" width="150" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_filter" value="&lt;b&gt;Filter&lt;/b&gt;&lt;br&gt;Saudi dialects only&lt;br&gt;3-30s duration&lt;br&gt;Text quality check" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8daef;strokeColor=#8e44ad;fontSize=11;arcSize=12;shadow=1;" parent="a1" vertex="1">
+                    <mxGeometry x="310" y="960" width="170" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_batch" value="&lt;b&gt;Batch Convert&lt;/b&gt;&lt;br&gt;500 samples/batch&lt;br&gt;Prevents RAM overflow" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d4efdf;strokeColor=#27ae60;fontSize=11;arcSize=12;shadow=1;" parent="a1" vertex="1">
+                    <mxGeometry x="540" y="960" width="170" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_split" value="&lt;b&gt;Train/Eval Split&lt;/b&gt;&lt;br&gt;95% / 5%&lt;br&gt;~8000 samples" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d6eaf8;strokeColor=#2980b9;fontSize=11;arcSize=12;shadow=1;" parent="a1" vertex="1">
+                    <mxGeometry x="770" y="960" width="170" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_format" value="&lt;b&gt;Format as Chat&lt;/b&gt;&lt;br&gt;user: [audio] transcribe&lt;br&gt;assistant: transcript" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fdebd0;strokeColor=#e67e22;fontSize=11;arcSize=12;shadow=1;" parent="a1" vertex="1">
+                    <mxGeometry x="1000" y="960" width="170" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_fa1" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=2;strokeColor=#4D4D4D;" parent="a1" source="a_raw" target="a_filter" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_fa2" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=2;strokeColor=#4D4D4D;" parent="a1" source="a_filter" target="a_batch" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_fa3" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=2;strokeColor=#4D4D4D;" parent="a1" source="a_batch" target="a_split" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_fa4" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=2;strokeColor=#4D4D4D;" parent="a1" source="a_split" target="a_format" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_inf_title" value="Inference Pipeline" style="text;html=1;align=center;verticalAlign=middle;fontSize=18;fontStyle=1;strokeColor=none;fillColor=none;" parent="a1" vertex="1">
+                    <mxGeometry x="300" y="1080" width="400" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_mic" value="🎤&lt;br&gt;&lt;b&gt;Audio Input&lt;/b&gt;&lt;br&gt;16kHz mono" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fadbd8;strokeColor=#e74c3c;fontSize=12;shadow=1;arcSize=15;" parent="a1" vertex="1">
+                    <mxGeometry x="100" y="1130" width="140" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_seg" value="&lt;b&gt;Segment&lt;/b&gt;&lt;br&gt;15-25s chunks&lt;br&gt;1.5s overlap" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8daef;strokeColor=#8e44ad;fontSize=12;shadow=1;arcSize=15;" parent="a1" vertex="1">
+                    <mxGeometry x="300" y="1130" width="150" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_inf_model" value="&lt;b&gt;Model&lt;/b&gt;&lt;br&gt;Base + LoRA merged&lt;br&gt;generate()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#6c3483;strokeColor=#4a235a;fontColor=#ffffff;fontSize=12;shadow=1;arcSize=15;" parent="a1" vertex="1">
+                    <mxGeometry x="510" y="1130" width="170" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_merge" value="&lt;b&gt;Merge&lt;/b&gt;&lt;br&gt;Join chunks&lt;br&gt;Remove overlap" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d4efdf;strokeColor=#27ae60;fontSize=12;shadow=1;arcSize=15;" parent="a1" vertex="1">
+                    <mxGeometry x="740" y="1130" width="150" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_output" value="&lt;b&gt;Arabic Text&lt;/b&gt;&lt;br&gt;النص العربي" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e8449;strokeColor=#145a32;fontColor=#ffffff;fontSize=14;shadow=1;arcSize=15;" parent="a1" vertex="1">
+                    <mxGeometry x="950" y="1130" width="160" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_ia1" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=2;strokeColor=#4D4D4D;" parent="a1" source="a_mic" target="a_seg" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_ia2" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=2;strokeColor=#4D4D4D;" parent="a1" source="a_seg" target="a_inf_model" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_ia3" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=2;strokeColor=#4D4D4D;" parent="a1" source="a_inf_model" target="a_merge" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_ia4" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=2;strokeColor=#4D4D4D;" parent="a1" source="a_merge" target="a_output" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_eval_title" value="Evaluation Protocol" style="text;html=1;align=center;verticalAlign=middle;fontSize=18;fontStyle=1;strokeColor=none;fillColor=none;" parent="a1" vertex="1">
+                    <mxGeometry x="300" y="1250" width="400" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_eval_clean" value="&lt;b&gt;Clean Test Set&lt;/b&gt;&lt;br&gt;400 fixed Saudi samples&lt;br&gt;Target: WER &amp;lt; 20%" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;shadow=1;arcSize=12;" parent="a1" vertex="1">
+                    <mxGeometry x="200" y="1300" width="250" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_eval_noisy" value="&lt;b&gt;Noisy Test Set&lt;/b&gt;&lt;br&gt;Bodycam simulation (SNR 10dB)&lt;br&gt;Target: WER &amp;lt; 35%" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fdebd0;strokeColor=#e67e22;fontSize=12;shadow=1;arcSize=12;" parent="a1" vertex="1">
+                    <mxGeometry x="550" y="1300" width="250" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_eval_compare" value="&lt;b&gt;Comparison Table&lt;/b&gt;&lt;br&gt;Baseline → Phase 1 → Phase 2&lt;br&gt;WER + CER breakdown" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;shadow=1;arcSize=12;" parent="a1" vertex="1">
+                    <mxGeometry x="375" y="1400" width="250" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_ea1" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=2;strokeColor=#4D4D4D;" parent="a1" source="a_eval_clean" target="a_eval_compare" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_ea2" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=2;strokeColor=#4D4D4D;" parent="a1" source="a_eval_noisy" target="a_eval_compare" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_stack_title" value="Technology Stack" style="text;html=1;align=center;verticalAlign=middle;fontSize=16;fontStyle=1;strokeColor=none;fillColor=none;" parent="a1" vertex="1">
+                    <mxGeometry x="300" y="1510" width="400" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_s1" value="&lt;b&gt;transformers 4.56&lt;/b&gt;&lt;br&gt;Gemma3n support" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#999999;fontSize=11;arcSize=20;" parent="a1" vertex="1">
+                    <mxGeometry x="100" y="1550" width="160" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_s2" value="&lt;b&gt;PEFT 0.18&lt;/b&gt;&lt;br&gt;LoRA adapters" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#999999;fontSize=11;arcSize=20;" parent="a1" vertex="1">
+                    <mxGeometry x="290" y="1550" width="160" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_s3" value="&lt;b&gt;PyTorch 2.5&lt;/b&gt;&lt;br&gt;BF16 + CUDA 12.4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#999999;fontSize=11;arcSize=20;" parent="a1" vertex="1">
+                    <mxGeometry x="480" y="1550" width="160" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_s4" value="&lt;b&gt;datasets 3.5&lt;/b&gt;&lt;br&gt;Streaming mode" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#999999;fontSize=11;arcSize=20;" parent="a1" vertex="1">
+                    <mxGeometry x="670" y="1550" width="160" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_s5" value="&lt;b&gt;RTX A6000 48GB&lt;/b&gt;&lt;br&gt;RunPod cloud" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#999999;fontSize=11;arcSize=20;" parent="a1" vertex="1">
+                    <mxGeometry x="860" y="1550" width="160" height="50" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>
