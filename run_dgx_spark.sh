@@ -87,11 +87,11 @@ do_setup() {
     # 0c. Upgrade pip
     pip install --upgrade pip setuptools wheel 2>&1 | tail -1
 
-    # 0d. Install PyTorch with CUDA (DGX Spark has Blackwell GPU)
-    echo "Installing PyTorch with CUDA..."
-    pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124 2>&1 | tail -3
+    # 0d. Install PyTorch with CUDA (DGX Spark has Blackwell GB10 — needs cu128 nightly)
+    echo "Installing PyTorch with CUDA (cu128 for Blackwell)..."
+    pip install --pre torch torchvision torchaudio --index-url https://download.pytorch.org/whl/nightly/cu128 2>&1 | tail -3
 
-    # 0e. Install project dependencies
+    # 0e. Install project dependencies (datasets<4 to avoid torchcodec issues)
     echo "Installing project dependencies..."
     pip install -r "${PROJECT_DIR}/requirements.txt" 2>&1 | tail -5
 
