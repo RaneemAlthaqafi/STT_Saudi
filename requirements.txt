@@ -16,7 +16,7 @@ scipy>=1.12.0
 
 # Evaluation
 jiwer>=3.0.0
-whisper-normalizer>=1.0.0
+whisper-normalizer>=0.1.0
 
 # Benchmark (optional — for scripts/00_benchmark.py)
 # faster-whisper>=1.0.0    # uncomment to benchmark Systran/faster-whisper
