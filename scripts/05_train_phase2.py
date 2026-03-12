@@ -273,7 +273,7 @@ def main(args):
         gradient_checkpointing=False,
         fp16=False,
         bf16=torch.cuda.is_bf16_supported() if torch.cuda.is_available() else False,
-        optim="adamw_8bit",
+        optim="adamw_torch",
 
         logging_steps=args.logging_steps,
         logging_first_step=True,
