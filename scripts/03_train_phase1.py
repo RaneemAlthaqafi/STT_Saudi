@@ -351,7 +351,6 @@ def main(args):
         train_dataset=train_data,
         eval_dataset=eval_data,
         data_collator=collate_fn,
-        max_seq_length=args.max_seq_length,
         callbacks=[
             wer_callback,
             EarlyStoppingCallback(early_stopping_patience=3),
