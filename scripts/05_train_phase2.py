@@ -21,18 +21,26 @@ from pathlib import Path
 import numpy as np
 import torch
 
-# Patch Gemma3n MLP to skip _gaussian_topk on GB10 (sm_121)
+# Patch Gemma3n _gaussian_topk to use CPU erfinv (avoids CUDA JIT on GB10 sm_121)
 def _patch_gemma3n_mlp():
     try:
         from transformers.models.gemma3n import modeling_gemma3n as _m
-        orig_forward = _m.Gemma3nTextMLP.forward
-        def _patched_forward(self, x):
-            gate = self.gate_proj(x)
-            gate = self.act_fn(gate)
-            up = self.up_proj(x)
-            return self.down_proj(gate * up)
-        _m.Gemma3nTextMLP.forward = _patched_forward
-        print("  [patch] Gemma3n MLP gaussian_topk disabled for GB10 compatibility")
+        def _patched_gaussian_topk(self, x):
+            import math
+            from torch.distributions import Normal
+            if not hasattr(self, '_cached_sparsity'):
+                target = getattr(self.config, 'laurel_rank', None) or getattr(self.config, 'moe_intermediate_size', None)
+                total = x.shape[-1]
+                sparsity = 1.0 - (target / total) if target else 0.0
+                self._cached_sparsity = max(0.0, min(sparsity, 0.999))
+            if self._cached_sparsity <= 0.0:
+                return x * self.act_fn(x)
+            sparsity_tensor = torch.tensor(self._cached_sparsity, dtype=torch.float32, device='cpu')
+            normal = Normal(0, 1)
+            threshold = (normal.icdf(sparsity_tensor)).to(x.device).to(x.dtype)
+            return x * (x > threshold).to(x.dtype)
+        _m.Gemma3nTextMLP._gaussian_topk = _patched_gaussian_topk
+        print("  [patch] Gemma3n gaussian_topk patched to use CPU erfinv (GB10 compatible)")
     except Exception as e:
         print(f"  [patch] Warning: could not patch Gemma3n MLP: {e}")
 
