@@ -276,8 +276,6 @@ def main(args):
         bf16=torch.cuda.is_bf16_supported() if torch.cuda.is_available() else False,
         optim="adamw_8bit",
 
-        max_seq_length=args.max_seq_length,
-
         logging_steps=args.logging_steps,
         logging_first_step=True,
         report_to="none",
@@ -312,6 +310,7 @@ def main(args):
         train_dataset=train_data,
         eval_dataset=eval_data,
         data_collator=collate_fn,
+        max_seq_length=args.max_seq_length,
         callbacks=[
             wer_callback,
             EarlyStoppingCallback(early_stopping_patience=3),
