@@ -307,8 +307,8 @@ def main(args):
         num_train_epochs=args.num_epochs,
 
         # Memory optimization
-        gradient_checkpointing=True,
-        gradient_checkpointing_kwargs={"use_reentrant": False},
+        # gradient_checkpointing disabled — Gemma3n AltUp layer bug with checkpointing
+        gradient_checkpointing=False,
         fp16=False,
         bf16=torch.cuda.is_bf16_supported() if torch.cuda.is_available() else False,
         optim="adamw_8bit",
