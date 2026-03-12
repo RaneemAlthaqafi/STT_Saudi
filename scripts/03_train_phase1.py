@@ -426,7 +426,7 @@ if __name__ == "__main__":
     parser.add_argument("--model_name", type=str,
                         default="oddadmix/MasriSwitch-Gemma3n-Transcriber-v1")
     parser.add_argument("--max_seq_length", type=int, default=1024)
-    parser.add_argument("--load_in_4bit", action="store_true", default=True)
+    parser.add_argument("--load_in_4bit", action="store_true", default=False)
 
     # LoRA
     parser.add_argument("--lora_r", type=int, default=16)

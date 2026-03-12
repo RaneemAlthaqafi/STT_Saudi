@@ -388,7 +388,7 @@ if __name__ == "__main__":
     parser.add_argument("--output_dir", type=str, default="./checkpoints/phase2")
 
     parser.add_argument("--max_seq_length", type=int, default=1024)
-    parser.add_argument("--load_in_4bit", action="store_true", default=True)
+    parser.add_argument("--load_in_4bit", action="store_true", default=False)
     parser.add_argument("--batch_size", type=int, default=1)
     parser.add_argument("--gradient_accumulation_steps", type=int, default=4)
     parser.add_argument("--learning_rate", type=float, default=1e-5)
