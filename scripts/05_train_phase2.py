@@ -20,6 +20,24 @@ from pathlib import Path
 
 import numpy as np
 import torch
+
+# Patch Gemma3n MLP to skip _gaussian_topk on GB10 (sm_121)
+def _patch_gemma3n_mlp():
+    try:
+        from transformers.models.gemma3n import modeling_gemma3n as _m
+        orig_forward = _m.Gemma3nTextMLP.forward
+        def _patched_forward(self, x):
+            gate = self.gate_proj(x)
+            gate = self.act_fn(gate)
+            up = self.up_proj(x)
+            return self.down_proj(gate * up)
+        _m.Gemma3nTextMLP.forward = _patched_forward
+        print("  [patch] Gemma3n MLP gaussian_topk disabled for GB10 compatibility")
+    except Exception as e:
+        print(f"  [patch] Warning: could not patch Gemma3n MLP: {e}")
+
+_patch_gemma3n_mlp()
+
 from datasets import load_from_disk
 from transformers import (
     AutoProcessor,
