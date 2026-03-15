@@ -54,20 +54,25 @@ from utils.metrics import (
 def _patch_gemma3n_mlp():
     """Patch Gemma3n gaussian_topk to avoid CUDA JIT erfinv on GB10."""
     try:
-        import transformers.models.gemma3n.modeling_gemma3n as _m
+        from transformers.models.gemma3n import modeling_gemma3n as _m
 
         def _patched_gaussian_topk(self, x):
-            target_sparsity_tensor = torch.tensor(
-                self.target_sparsity, device="cpu", dtype=torch.float32
+            from torch.distributions import Normal
+            if not hasattr(self, "_cached_sparsity"):
+                target = getattr(self.config, "laurel_rank", None) or getattr(
+                    self.config, "moe_intermediate_size", None
+                )
+                total = x.shape[-1]
+                sparsity = 1.0 - (target / total) if target else 0.0
+                self._cached_sparsity = max(0.0, min(sparsity, 0.999))
+            if self._cached_sparsity <= 0.0:
+                return x * self.act_fn(x)
+            sparsity_tensor = torch.tensor(
+                self._cached_sparsity, dtype=torch.float32, device="cpu"
             )
-            std_multiplier = torch.distributions.Normal(
-                loc=torch.tensor(0.0), scale=torch.tensor(1.0)
-            ).icdf(target_sparsity_tensor)
-            std_multiplier = std_multiplier.to(device=x.device, dtype=x.dtype)
-            mean = x.mean(dim=-1, keepdim=True)
-            std = x.std(dim=-1, keepdim=True)
-            threshold = mean + std_multiplier * std
-            return torch.where(x > threshold, x, torch.zeros_like(x))
+            normal = Normal(0, 1)
+            threshold = normal.icdf(sparsity_tensor).to(x.device).to(x.dtype)
+            return x * (x > threshold).to(x.dtype)
 
         _m.Gemma3nTextMLP._gaussian_topk = _patched_gaussian_topk
         print("  [patch] Gemma3n gaussian_topk patched for GB10 evaluation")
