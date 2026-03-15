@@ -84,7 +84,8 @@ def generate_synthetic_noise(noise_type: str, length: int, sr: int = 16000) -> n
     if noise_type == "street":
         # Broadband + low rumble
         noise = np.random.normal(0, 0.1, length).astype(np.float32)
-        rumble = np.random.normal(0, 0.3, length // 10)
+        rumble_chunks = int(np.ceil(length / 10))
+        rumble = np.random.normal(0, 0.3, rumble_chunks).astype(np.float32)
         rumble = np.repeat(rumble, 10)[:length]
         return (noise * 0.6 + rumble * 0.4).astype(np.float32)
 
