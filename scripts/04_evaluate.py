@@ -51,6 +51,33 @@ from utils.metrics import (
 )
 
 
+def _patch_gemma3n_mlp():
+    """Patch Gemma3n gaussian_topk to avoid CUDA JIT erfinv on GB10."""
+    try:
+        import transformers.models.gemma3n.modeling_gemma3n as _m
+
+        def _patched_gaussian_topk(self, x):
+            target_sparsity_tensor = torch.tensor(
+                self.target_sparsity, device="cpu", dtype=torch.float32
+            )
+            std_multiplier = torch.distributions.Normal(
+                loc=torch.tensor(0.0), scale=torch.tensor(1.0)
+            ).icdf(target_sparsity_tensor)
+            std_multiplier = std_multiplier.to(device=x.device, dtype=x.dtype)
+            mean = x.mean(dim=-1, keepdim=True)
+            std = x.std(dim=-1, keepdim=True)
+            threshold = mean + std_multiplier * std
+            return torch.where(x > threshold, x, torch.zeros_like(x))
+
+        _m.Gemma3nTextMLP._gaussian_topk = _patched_gaussian_topk
+        print("  [patch] Gemma3n gaussian_topk patched for GB10 evaluation")
+    except Exception as e:
+        print(f"  [patch] Warning: could not patch Gemma3n MLP: {e}")
+
+
+_patch_gemma3n_mlp()
+
+
 # ──────────────────────────────────────────────────────────────
 # Bodycam noise simulation for fixed noisy test set
 # ──────────────────────────────────────────────────────────────
@@ -78,7 +105,7 @@ def _apply_bodycam_noise(audio_array: np.ndarray, sr: int = 16000, snr_db: float
 # Model loading — supports both PEFT and Unsloth
 # ──────────────────────────────────────────────────────────────
 
-def load_model_for_eval(model_dir, base_model_name=None, use_4bit=True):
+def load_model_for_eval(model_dir, base_model_name=None, use_4bit=False):
     """
     Load fine-tuned model for evaluation.
     Tries pure HF+PEFT first, falls back to Unsloth.
