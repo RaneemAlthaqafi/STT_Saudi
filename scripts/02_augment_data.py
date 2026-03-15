@@ -380,6 +380,7 @@ def main(args):
 
     if augmented_samples:
         aug_dataset = Dataset.from_list(augmented_samples)
+        aug_dataset = aug_dataset.cast_column("audio", Audio(sampling_rate=16000))
         aug_sub = aug_dataset.select_columns(
             [c for c in common_cols if c in aug_dataset.column_names]
         )
